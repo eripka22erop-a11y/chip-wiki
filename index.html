@@ -146,15 +146,33 @@
 
 /* Светлая тема */
 body.light-mode { background-color: #f1f5f9; color: #0f172a; }
-body.light-mode .card, body.light-mode .sidebar, body.light-mode header, body.light-mode .search-box { 
-    background: #ffffff; border-color: #cbd5e1; 
+
+body.light-mode .card, 
+body.light-mode .sidebar, 
+body.light-mode header, 
+body.light-mode .search-box { 
+    background: #ffffff; 
+    border-color: #cbd5e1; 
+    color: #0f172a; 
 }
+
+/* Исправляем текст внутри меню и карточек */
+body.light-mode .menu-item { color: #334155; }
+body.light-mode .menu-item:hover { background: #f1f5f9; color: #0f172a; }
 body.light-mode .card h3 { color: #0f172a; }
 body.light-mode .card .desc { color: #475569; }
-body.light-mode .menu-item { color: #334155; }
-body.light-mode .menu-item:hover { background: #e2e8f0; }
+
+/* Кнопки тегов */
 body.light-mode .tag-btn { background: #ffffff; border-color: #cbd5e1; color: #475569; }
-body.light-mode .tag-btn.active { background: #38bdf8; color: #ffffff; }
+body.light-mode .tag-btn.active { background: #38bdf8; color: #ffffff; border-color: #38bdf8; }
+
+/* Кнопки управления (меню и тема) */
+body.light-mode .menu-btn, 
+body.light-mode .theme-btn { 
+    background: #ffffff; 
+    border-color: #cbd5e1; 
+    color: #38bdf8; 
+}
     </style>
 </head>
 <body>
