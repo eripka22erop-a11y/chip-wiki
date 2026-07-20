@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LM317T — Характеристики, распиновка, аналоги | Chip-Wiki</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 800px; }
+        .nav-back { display: inline-block; color: #38bdf8; text-decoration: none; margin-bottom: 20px; font-weight: bold; }
+        .nav-back:hover { text-decoration: underline; }
+        header { background: #1e293b; padding: 25px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; }
+        h1 { color: #38bdf8; font-size: 2rem; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; font-size: 1.1rem; }
+
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .spec-card { background: #1e293b; padding: 16px; border-radius: 10px; border: 1px solid #334155; text-align: center; }
+        .spec-card .value { font-size: 1.4rem; font-weight: bold; color: #38bdf8; margin-bottom: 4px; }
+        .spec-card .label { font-size: 0.85rem; color: #94a3b8; }
+
+        .main-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .card-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: space-between; }
+
+        h2 { color: #f1f5f9; font-size: 1.3rem; margin: 25px 0 12px; border-left: 4px solid #38bdf8; padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; margin-bottom: 20px; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #334155; color: #38bdf8; font-weight: 600; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: #26334d; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="nav-back">← Назад к поиску</a>
+
+        <header>
+            <h1>LM317T</h1>
+            <div class="subtitle">Регулируемый линейный стабилизатор напряжения и тока</div>
+        </header>
+
+        <div class="specs-grid">
+            <div class="spec-card">
+                <div class="value">1.25 – 37 В</div>
+                <div class="label">Выходное напряжение</div>
+            </div>
+            <div class="spec-card">
+                <div class="value">1.5 А</div>
+                <div class="label">Макс. выходной ток</div>
+            </div>
+            <div class="spec-card">
+                <div class="value">40 В</div>
+                <div class="label">Макс. разница V<sub>in</sub> - V<sub>out</sub></div>
+            </div>
+            <div class="spec-card">
+                <div class="value">TO-220</div>
+                <div class="label">Тип корпуса</div>
+            </div>
+        </div>
+
+        <div class="main-info">
+            <div class="card-box">
+                <div>
+                    <h3>Цоколевка (TO-220)</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">Вид спереди (надписью к себе)</p>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <svg width="100%" height="auto" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid meet" style="max-width: 320px; display: block; margin: 0 auto;">
+                            <rect x="110" y="10" width="100" height="30" fill="#94a3b8" rx="2"/>
+                            <circle cx="160" cy="22" r="7" fill="#0f172a"/>
+                            <rect x="110" y="35" width="100" height="60" fill="#1e293b" stroke="#475569" stroke-width="2" rx="2"/>
+                            <rect x="122" y="95" width="12" height="40" fill="#cbd5e1"/>
+                            <rect x="154" y="95" width="12" height="40" fill="#cbd5e1"/>
+                            <rect x="186" y="95" width="12" height="40" fill="#cbd5e1"/>
+                            
+                            <text x="10" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="start">1. ADJ (Настройка)</text>
+                            <text x="160" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#22c55e" text-anchor="middle">2. VOUT (Выход)</text>
+                            <text x="310" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="end">3. VIN (Вход)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <ul style="font-size: 0.85rem; padding-left: 18px; color: #cbd5e1; line-height: 1.6;">
+                    <li><b style="color: #38bdf8;">1. ADJ</b> — Управляющий вывод (подключается к делителю)</li>
+                    <li><b style="color: #22c55e;">2. VOUT</b> — Выход стабилизированного напряжения</li>
+                    <li><b style="color: #ef4444;">3. VIN</b> — Вход нестабилизированного питания</li>
+                </ul>
+            </div>
+
+            <div class="card-box">
+                <div>
+                    <h3>Формула расчёта</h3>
+                    <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; margin-top: 8px;">
+                        Выходное напряжение задается двумя резисторами:<br>
+                        <b>V<sub>out</sub> = 1.25V × (1 + R2 / R1)</b><br><br>
+                        Применяется в регулируемых блоках питания и стабилизаторах тока для зарядных устройств.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Аналоги LM317</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Модель</th>
+                    <th>Ток</th>
+                    <th>Особенности</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><b>КР142ЕН12А</b></td><td>1.5 А</td><td>Отечественный аналог</td></tr>
+                <tr><td><b>LM338</b></td><td>5.0 А</td><td>Более мощный вариант</td></tr>
+                <tr><td><b>LM317K</b></td><td>1.5 А</td><td>Корпус TO-3 (металл)</td></tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
