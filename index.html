@@ -127,6 +127,33 @@
         <p class="subtitle">Быстрый справочник цоколевок, характеристик и аналогов</p>
 
         <input type="text" id="searchInput" onkeyup="filterComponents()" class="search-box" placeholder="Поиск детали">
+        <!-- Быстрые теги-фильтры -->
+<div class="tags-container" style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+    <button onclick="filterByTag('all')" class="tag-btn active">Все</button>
+    <button onclick="filterByTag('transistor')" class="tag-btn">Транзисторы</button>
+    <button onclick="filterByTag('ic')" class="tag-btn">Микросхемы</button>
+    <button onclick="filterByTag('diode')" class="tag-btn">Диоды</button>
+    <button onclick="filterByTag('opto')" class="tag-btn">Опто/Датчики</button>
+</div>
+
+<style>
+    .tag-btn {
+        background: #1e293b;
+        border: 1px solid #334155;
+        color: #94a3b8;
+        padding: 6px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.2s ease;
+    }
+    .tag-btn:hover, .tag-btn.active {
+        background: #38bdf8;
+        color: #0f172a;
+        border-color: #38bdf8;
+        font-weight: 600;
+    }
+</style>
 
        <div class="grid" id="cardsGrid">
             <!-- Транзисторы -->
