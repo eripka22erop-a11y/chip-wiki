@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2N2222 — Характеристики, цоколевка, аналоги | Chip-Wiki</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 800px; }
+        .nav-back { display: inline-block; color: #38bdf8; text-decoration: none; margin-bottom: 20px; font-weight: bold; }
+        .nav-back:hover { text-decoration: underline; }
+        header { background: #1e293b; padding: 25px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; }
+        h1 { color: #38bdf8; font-size: 2rem; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; font-size: 1.1rem; }
+
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .spec-card { background: #1e293b; padding: 16px; border-radius: 10px; border: 1px solid #334155; text-align: center; }
+        .spec-card .value { font-size: 1.4rem; font-weight: bold; color: #38bdf8; margin-bottom: 4px; }
+        .spec-card .label { font-size: 0.85rem; color: #94a3b8; }
+
+        .main-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .card-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: space-between; }
+
+        h2 { color: #f1f5f9; font-size: 1.3rem; margin: 25px 0 12px; border-left: 4px solid #38bdf8; padding-left: 10px; }
+        
+        table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #334155; color: #38bdf8; }
+        tr:hover { background: #26334d; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="nav-back">← Назад к поиску</a>
+
+        <header>
+            <h1>2N2222 (PN2222)</h1>
+            <div class="subtitle">Универсальный высокоскоростной NPN транзистор</div>
+        </header>
+
+        <div class="specs-grid">
+            <div class="spec-card">
+                <div class="value">40 В</div>
+                <div class="label">Напряжение К-Э (V<sub>CEO</sub>)</div>
+            </div>
+            <div class="spec-card">
+                <div class="value">0.8 А</div>
+                <div class="label">Ток коллектора (I<sub>C</sub>)</div>
+            </div>
+            <div class="spec-card">
+                <div class="value">100–300</div>
+                <div class="label">Усиление (h<sub>FE</sub>)</div>
+            </div>
+            <div class="spec-card">
+                <div class="value">300 МГц</div>
+                <div class="label">Частота (f<sub>T</sub>)</div>
+            </div>
+        </div>
+
+        <div class="main-info">
+            <div class="card-box">
+                <div>
+                    <h3>Цоколевка (TO-92)</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">Вид снизу / сплошной стороной к себе</p>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <svg width="100%" height="auto" viewBox="0 0 260 160" preserveAspectRatio="xMidYMid meet" style="max-width: 280px; display: block; margin: 0 auto;">
+                            <!-- Полукруглый корпус TO-92 -->
+                            <path d="M 60 80 A 70 70 0 0 1 200 80 L 60 80 Z" fill="#1e293b" stroke="#475569" stroke-width="3"/>
+                            
+                            <!-- Ножки -->
+                            <rect x="85" y="80" width="10" height="50" fill="#cbd5e1"/>
+                            <rect x="125" y="80" width="10" height="50" fill="#cbd5e1"/>
+                            <rect x="165" y="80" width="10" height="50" fill="#cbd5e1"/>
+                            
+                            <!-- Подписи -->
+                            <text x="50" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#22c55e" text-anchor="middle">1. E (Эмиттер)</text>
+                            <text x="130" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">2. B (База)</text>
+                            <text x="210" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">3. C (Коллектор)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <ul style="font-size: 0.85rem; padding-left: 18px; color: #cbd5e1; line-height: 1.6;">
+                    <li><b style="color: #22c55e;">1. Emitter</b> — Эмиттер (выход)</li>
+                    <li><b style="color: #38bdf8;">2. Base</b> — База (управление)</li>
+                    <li><b style="color: #ef4444;">3. Collector</b> — Коллектор (вход)</li>
+                </ul>
+            </div>
+
+            <div class="card-box">
+                <div>
+                    <h3>Назначение</h3>
+                    <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; margin-top: 8px;">
+                        Один из самых массовых транзисторов в мире. Применяется в маломощных ключах, усилителях низкой и высокой частоты, а также схемах управления реле и светодиодами с микроконтроллеров.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Аналоги 2N2222</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Модель</th>
+                    <th>Напряжение</th>
+                    <th>Ток</th>
+                    <th>Тип</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><b>PN2222A</b></td><td>40 В</td><td>1.0 А</td><td>Пластик (TO-92)</td></tr>
+                <tr><td><b>BC337</b></td><td>45 В</td><td>0.8 А</td><td>Пластик (TO-92)</td></tr>
+                <tr><td><b>КТ315Г</b></td><td>40 В</td><td>0.1 А</td><td>Отечественный аналог</td></tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
