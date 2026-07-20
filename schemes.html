@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Базовые схемы и узлы | Chip-Wiki</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 0; }
         body { background-color: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; }
         .container { width: 100%; max-width: 800px; }
         .nav-back { display: inline-block; color: #38bdf8; text-decoration: none; margin-bottom: 20px; font-weight: bold; }
@@ -14,13 +14,26 @@
         h1 { color: #eab308; font-size: 2rem; margin-bottom: 5px; }
         .subtitle { color: #94a3b8; font-size: 1.1rem; }
 
-        .scheme-card { background: #1e293b; padding: 22px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 25px; }
-        h2 { color: #38bdf8; font-size: 1.3rem; margin-bottom: 12px; border-left: 4px solid #38bdf8; padding-left: 10px; }
+        .scheme-card { background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 25px; }
+        h2 { color: #38bdf8; font-size: 1.3rem; margin-bottom: 15px; border-left: 4px solid #38bdf8; padding-left: 10px; }
+        p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; }
+
+        /* Графический визуализатор схем */
+        .diagram { background: #0f172a; padding: 20px; border-radius: 10px; border: 1px solid #334155; margin: 15px 0; display: flex; flex-direction: column; gap: 12px; align-items: center; }
         
-        p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px; }
+        .circuit-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; width: 100%; }
         
-        .code-box { background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155; font-family: monospace; color: #38bdf8; font-size: 0.9rem; line-height: 1.5; overflow-x: auto; }
-        .note { background: #1e293b; border-left: 4px solid #eab308; padding: 12px; border-radius: 4px; font-size: 0.88rem; color: #cbd5e1; margin-top: 10px; }
+        .node { background: #1e293b; border: 2px solid #38bdf8; color: #f8fafc; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+        .node.power { border-color: #ef4444; color: #fca5a5; }
+        .node.gnd { border-color: #64748b; color: #94a3b8; }
+        .node.component { border-color: #eab308; color: #fef08a; }
+        .node.mcu { border-color: #22c55e; color: #86efac; }
+
+        .wire { height: 2px; background: #38bdf8; flex-grow: 1; min-width: 20px; position: relative; }
+        .wire::after { content: ''; position: absolute; right: 0; top: -3px; width: 0; height: 0; border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-left: 6px solid #38bdf8; }
+
+        .note { background: #0f172a; border-left: 4px solid #eab308; padding: 12px 16px; border-radius: 6px; font-size: 0.9rem; color: #cbd5e1; margin-top: 15px; line-height: 1.5; }
+        .note b { color: #fef08a; }
     </style>
 </head>
 <body>
@@ -30,70 +43,77 @@
 
         <header>
             <h1>⚡ Базовые схемы и узлы</h1>
-            <div class="subtitle">Правильное подключение компонентов, подтяжка и защита</div>
+            <div class="subtitle">Интерактивный справочник правильного подключения</div>
         </header>
 
-        <!-- Схема 1: Полевой транзистор -->
+        <!-- Схема 1 -->
         <div class="scheme-card">
             <h2>1. Подключение N-channel MOSFET к МК</h2>
-            <p>Чтобы правильно управлять мощной нагрузкой (мотор, лента, клапан) через полевик и не спалить пин контроллера:</p>
+            <p>Чтобы плавно управлять мощной нагрузкой (мотор, светодиодная лента) через полевой транзистор и не затворить микроконтроллер:</p>
             
-            <div class="code-box">
-[Пин МК] ───[ 220 Ом ]───┬─── Gate (Затвор MOSFET)
-                          │
-                       [10 кОм] (Подтяжка к GND)
-                          │
-                         GND
+            <div class="diagram">
+                <div class="circuit-row">
+                    <div class="node mcu">Пин МК</div>
+                    <div class="wire"></div>
+                    <div class="node component">220 Ом (Затвор)</div>
+                    <div class="wire"></div>
+                    <div class="node component">Затвор (Gate)</div>
+                </div>
+                <div style="font-size: 0.8rem; color: #64748b; margin: -5px 0;">│ (подтяжка 10 кОм)</div>
+                <div class="node gnd">Земля (GND)</div>
             </div>
 
             <div class="note">
-                <b>Зачем эти резисторы?</b><br>
-                • <b>220 Ом:</b> Защищает пин МК от импульсного тока (емкость затвора работает как микро-конденсатор).<br>
-                • <b>10 кОм:</b> При перезагрузке МК ножка "висит в воздухе". Резистор притягивает затвор к минусу, чтобы транзистор случайно не открылся сам.
+                <b>Зачем нужны резисторы?</b><br>
+                • <b>220 Ом</b> — ограничивает токовый бросок при заряде затвора (защищает ножку МК).<br>
+                • <b>10 кОм на GND</b> — притяжка. Не даёт полевику самопроизвольно открыться при перезагрузке МК.
             </div>
         </div>
 
-        <!-- Схема 2: Защита от индуктивной нагрузки -->
+        <!-- Схема 2 -->
         <div class="scheme-card">
-            <h2>2. Подключение реле / мотора (Защитный диод)</h2>
-            <p>Любая катушка (реле, мотор, соленоид) при выключении генерирует мощный обратный выброс напряжения (самоиндукция), который моментально пробивает транзисторы.</p>
+            <h2>2. Защита от индуктивной нагрузки (Реле / Мотор)</h2>
+            <p>Катушка реле или мотора при отключении создаёт мощный обратный выброс тока (ЭДС самоиндукции), сжигающий транзисторы.</p>
 
-            <div class="code-box">
-              +V (Питание нагрузки)
-                   │
-           ┌───────┴───────┐
-           │   [Катушка]   │
-           │   (Реле/Мотор)│
-           │               │
-           ├───[◄───1N4007]┤  (Диод включен КАТОДОМ к плюсу!)
-           │               │
-           └───────┬───────┘
-                   │
-             Drain (Сток MOSFET)
+            <div class="diagram">
+                <div class="circuit-row">
+                    <div class="node power">+V Питания</div>
+                    <div class="wire"></div>
+                    <div class="node component">Катушка / Мотор</div>
+                    <div class="wire"></div>
+                    <div class="node component">Сток MOSFET</div>
+                </div>
+                <div style="margin-top: 8px;" class="node component" style="border-color: #ef4444;">
+                    🛡️ Защитный диод (1N4007 / SS14) — Катодом к +V!
+                </div>
             </div>
 
             <div class="note">
-                <b>Важно:</b> Диод (например, 1N4007 или SS14) ставится <b>параллельно катушке</b> в обратном направлении (полоской/катодом к плюсу). Он гасит опасный импульс внутри катушки.
+                <b>Правило:</b> Диод подключается <b>параллельно катушке</b>, но в обратном направлении (полоской к плюсу). Он моментально гасит самоиндукцию.
             </div>
         </div>
 
-        <!-- Схема 3: Подключение кнопки -->
+        <!-- Схема 3 -->
         <div class="scheme-card">
-            <h2>3. Подключение кнопки (Pull-Up / Pull-Down)</h2>
-            <p>Цифровой пин МК нельзя оставлять просто подключенным к кнопке — без подтяжки он будет считывать случайный шум из воздуха.</p>
+            <h2>3. Подключение кнопки (Pull-Up)</h2>
+            <p>Защищает вход микроконтроллера от ложных срабатываний и наводок из воздуха.</p>
 
-            <div class="code-box">
-Схема Pull-Up (Считываем LOW при нажатии):
-
- +5V ───[ 10 кОм ]───┬─── [Пин МК]
-                     │
-                 [Кнопка]
-                     │
-                    GND
+            <div class="diagram">
+                <div class="circuit-row">
+                    <div class="node power">+5V</div>
+                    <div class="wire"></div>
+                    <div class="node component">Резистор 10 кОм</div>
+                    <div class="wire"></div>
+                    <div class="node mcu">Пин МК</div>
+                    <div class="wire"></div>
+                    <div class="node component">Кнопка</div>
+                    <div class="wire"></div>
+                    <div class="node gnd">GND</div>
+                </div>
             </div>
 
             <div class="note">
-                <b>Лайфхак для Ардуино:</b> Внешний резистор можно не паять! Достаточно включить встроенную подтяжку в коде: <code>pinMode(PIN, INPUT_PULLUP);</code> — и подключать кнопку напрямую между пином и GND.
+                <b>Лайфхак для Ардуино:</b> Резистор можно не паять! Включи встроенную подтяжку прямо в коде: <code>pinMode(PIN, INPUT_PULLUP);</code> и цепляй кнопку просто между пином и GND.
             </div>
         </div>
 
