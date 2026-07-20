@@ -3,91 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chip-Wiki — Справочник радиодеталей и цоколевок</title>
+    <title>Chip-Wiki — Справочник радиодеталей</title>
     <style>
-        * { box-sizing: border-box; font-family: Segoe UI, sans-serif; margin: 0; padding: 0; }
-        body { background-color: #0f172a; color: #f8fafc; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 800px; text-align: center; margin-top: 40px; }
         
-        header { text-align: center; margin: 40px 0 20px; }
-        h1 { font-size: 2.5rem; color: #38bdf8; margin-bottom: 8px; }
-        p { color: #94a3b8; }
-
-        .search-box { width: 100%; max-width: 600px; margin: 20px 0 30px; }
-        .search-box input {
-            width: 100%; padding: 16px 20px; border-radius: 12px; border: 2px solid #334155;
-            background: #1e293b; color: #fff; font-size: 1.1rem; outline: none; transition: 0.2s;
+        /* Кнопка с тремя полосками (Бургер) */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #38bdf8;
+            font-size: 1.5rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
         }
-        .search-box input:focus { border-color: #38bdf8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
+        .menu-btn:hover { border-color: #38bdf8; background: #334155; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
+        /* Выезжающая шторка (Меню) */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px; /* Прячем за правый край */
+            width: 280px;
+            height: 100%;
+            background: #1e293b;
+            border-left: 1px solid #334155;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.5);
+            z-index: 999;
+            transition: 0.3s ease;
+            padding: 80px 20px 20px;
+            text-align: left;
+        }
+        .sidebar.active { right: 0; } /* Выезжает при нажатии */
+
+        /* Затемнение фона при открытом меню */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(3px);
+            z-index: 998;
+            display: none;
+        }
+        .overlay.active { display: block; }
+
+        .sidebar h2 { color: #38bdf8; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 8px; }
+
+        /* Элементы меню */
+        .menu-item {
+            display: block;
+            padding: 12px 15px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .menu-item:hover { background: #334155; color: #fff; }
+        .menu-item.active { background: #38bdf8; color: #0f172a; font-weight: bold; }
+
+        h1 { color: #38bdf8; font-size: 2.2rem; margin-bottom: 10px; }
+        p.subtitle { color: #94a3b8; font-size: 1rem; margin-bottom: 25px; }
+
+        .search-box {
+            width: 100%; padding: 14px 20px; font-size: 1rem; border-radius: 10px;
+            border: 1px solid #334155; background: #1e293b; color: #fff; margin-bottom: 25px; outline: none;
+        }
+        .search-box:focus { border-color: #38bdf8; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
         
         .card {
-            background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155;
-            transition: transform 0.2s, border-color 0.2s; cursor: pointer; text-decoration: none; color: inherit;
+            background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px;
+            text-align: left; text-decoration: none; color: inherit; transition: 0.2s; display: block;
         }
-        .card:hover { transform: translateY(-4px); border-color: #38bdf8; }
-        .card h3 { color: #f1f5f9; margin-bottom: 6px; font-size: 1.3rem; }
-        .card .type { color: #38bdf8; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
-        .card .specs { color: #94a3b8; font-size: 0.9rem; line-height: 1.4; }
+        .card:hover { border-color: #38bdf8; transform: translateY(-2px); }
+        .card h3 { color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px; }
+        .card .type { color: #38bdf8; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        .card .desc { color: #94a3b8; font-size: 0.85rem; line-height: 1.4; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Chip-Wiki</h1>
-        <p>Быстрый справочник цоколевок, характеристик и аналогов</p>
-    </header>
+    <!-- Кнопка ☰ в углу -->
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Поиск детали (например: IRF3205, NE555, КТ315)..." onkeyup="filterCards()">
+    <!-- Затемнение заднего фона -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- Выезжающее меню -->
+    <div class="sidebar" id="sidebar">
+        <h2>Категории</h2>
+        <div class="menu-item active" onclick="selectCategory('all', this)">Все компоненты</div>
+        <div class="menu-item" onclick="selectCategory('transistor', this)">Транзисторы</div>
+        <div class="menu-item" onclick="selectCategory('diode', this)">Диоды</div>
+        <div class="menu-item" onclick="selectCategory('ic', this)">Микросхемы</div>
+        <div class="menu-item" onclick="selectCategory('resistor', this)">Резисторы</div>
+        <div class="menu-item" onclick="selectCategory('capacitor', this)">Конденсаторы</div>
     </div>
 
-    <div class="grid" id="cardsGrid">
-        
-        <!-- Карточка 1 -->
-        <a href="irf3205.html" class="card" data-name="IRF3205 N-Channel MOSFET Полевой транзистор">
-            <h3>IRF3205</h3>
-            <div class="type">Полевой транзистор (N-Ch)</div>
-            <div class="specs">55V / 110A / TO-220<br>Сопротивление: 8 мОм</div>
-        </a>
+    <div class="container">
+        <h1>Chip-Wiki</h1>
+        <p class="subtitle">Быстрый справочник цоколевок, характеристик и аналогов</p>
 
-        <!-- Карточка 2 -->
-        <a href="ne555.html" class="card" data-name="NE555 Таймер Генератор DIP-8 SOIC-8">
-            <h3>NE555</h3>
-            <div class="type">Аналоговый таймер</div>
-            <div class="specs">Питание: 4.5V – 15V<br>Корпус: DIP-8 / SOIC-8</div>
-        </a>
+        <input type="text" id="searchInput" onkeyup="filterComponents()" class="search-box" placeholder="Поиск детали (например: IRF3205, NE555, КТ315)...">
 
-        <!-- Карточка 3 -->
-        <a href="kt315.html" class="card" data-name="КТ315 NPN Транзистор Биполярный TO-92">
-            <h3>КТ315</h3>
-            <div class="type">Биполярный транзистор (NPN)</div>
-            <div class="specs">15V–60V / 0.1A<br>Корпус: КТ-13 / TO-92</div>
-        </a>
+        <div class="grid" id="cardsGrid">
+            <a href="irf3205.html" class="card" data-category="transistor">
+                <h3>IRF3205</h3>
+                <div class="type">Полевой транзистор (N-Ch)</div>
+                <div class="desc">55V / 110A / TO-220<br>Сопротивление: 8 мОм</div>
+            </a>
 
-        <!-- Карточка 4 -->
-        <a href="#" class="card" data-name="1N4007 Диод Выпрямительный DO-41">
-            <h3>1N4007</h3>
-            <div class="type">Выпрямительный диод</div>
-            <div class="specs">1000V / 1A<br>Корпус: DO-41</div>
-        </a>
+            <a href="ne555.html" class="card" data-category="ic">
+                <h3>NE555</h3>
+                <div class="type">Аналоговый таймер</div>
+                <div class="desc">Питание: 4.5V – 15V<br>Корпус: DIP-8 / SOIC-8</div>
+            </a>
 
+            <a href="kt315.html" class="card" data-category="transistor">
+                <h3>КТ315</h3>
+                <div class="type">Биполярный транзистор (NPN)</div>
+                <div class="desc">15V–60V / 0.1A<br>Корпус: КТ-13 / TO-92</div>
+            </a>
+
+            <a href="1n4007.html" class="card" data-category="diode">
+                <h3>1N4007</h3>
+                <div class="type">Выпрямительный диод</div>
+                <div class="desc">1000V / 1A<br>Корпус: DO-41</div>
+            </a>
+        </div>
     </div>
 
     <script>
-        function filterCards() {
+        let currentCategory = 'all';
+
+        // Открытие/закрытие боковой панели
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        // Выбор категории из меню
+        function selectCategory(category, item) {
+            currentCategory = category;
+
+            // Переключаем подсветку активного пункта меню
+            let items = document.querySelectorAll('.menu-item');
+            items.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+
+            // Закрываем меню после выбора
+            toggleMenu();
+
+            // Фильтруем карточки
+            filterComponents();
+        }
+
+        // Фильтрация по поиску и категории
+        function filterComponents() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let cards = document.getElementsByClassName('card');
 
             for (let i = 0; i < cards.length; i++) {
-                let name = cards[i].getAttribute('data-name').toLowerCase();
-                if (name.includes(input)) {
-                    cards[i].style.display = "";
+                let card = cards[i];
+                let text = card.innerText.toLowerCase();
+                let category = card.getAttribute('data-category');
+
+                let matchesSearch = text.includes(input);
+                let matchesCategory = (currentCategory === 'all' || category === currentCategory);
+
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = "";
                 } else {
-                    cards[i].style.display = "none";
+                    card.style.display = "none";
                 }
             }
         }
     </script>
+
 </body>
 </html>
