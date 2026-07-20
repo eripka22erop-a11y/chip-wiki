@@ -127,13 +127,11 @@
         <p class="subtitle">Быстрый справочник цоколевок, характеристик и аналогов</p>
 
         <input type="text" id="searchInput" onkeyup="filterComponents()" class="search-box" placeholder="Поиск детали">
-        <!-- Быстрые теги-фильтры -->
-<div class="tags-container" style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
-    <button onclick="filterByTag('all')" class="tag-btn active">Все</button>
-    <button onclick="filterByTag('transistor')" class="tag-btn">Транзисторы</button>
-    <button onclick="filterByTag('ic')" class="tag-btn">Микросхемы</button>
-    <button onclick="filterByTag('diode')" class="tag-btn">Диоды</button>
-    <button onclick="filterByTag('opto')" class="tag-btn">Опто/Датчики</button>
+       <button onclick="selectCategory('all', this)" class="tag-btn active">Все</button>
+<button onclick="selectCategory('transistor', this)" class="tag-btn">Транзисторы</button>
+<button onclick="selectCategory('ic', this)" class="tag-btn">Микросхемы</button>
+<button onclick="selectCategory('diode', this)" class="tag-btn">Диоды</button>
+<button onclick="selectCategory('opto', this)" class="tag-btn">Опто/Датчики</button>
 </div>
 
 <style>
