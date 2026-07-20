@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TL072 — Характеристики, распиновка, аналоги | Chip-Wiki</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 800px; }
+        .nav-back { display: inline-block; color: #38bdf8; text-decoration: none; margin-bottom: 20px; font-weight: bold; }
+        .nav-back:hover { text-decoration: underline; }
+        header { background: #1e293b; padding: 25px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; }
+        h1 { color: #38bdf8; font-size: 2rem; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; font-size: 1.1rem; }
+
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .spec-card { background: #1e293b; padding: 16px; border-radius: 10px; border: 1px solid #334155; text-align: center; }
+        .spec-card .value { font-size: 1.4rem; font-weight: bold; color: #38bdf8; margin-bottom: 4px; }
+        .spec-card .label { font-size: 0.85rem; color: #94a3b8; }
+
+        .main-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .card-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: space-between; }
+
+        h2 { color: #f1f5f9; font-size: 1.3rem; margin: 25px 0 12px; border-left: 4px solid #38bdf8; padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; margin-bottom: 20px; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #334155; color: #38bdf8; font-weight: 600; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: #26334d; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="nav-back">← Назад к поиску</a>
+
+        <header>
+            <h1>TL072</h1>
+            <div class="subtitle">Малошумящий двухканальный операционный усилитель с JFET-входом</div>
+        </header>
+
+        <div class="specs-grid">
+            <div class="spec-card">
+                <div class="value">±6V ... ±18V</div>
+                <div class="label">Двуполярное питание</div>
+            </div>
+            <div class="spec-card">
+                <div class="value">13 В/мкс</div>
+                <div class="label">Скорость нарастания</div>
+            </div>
+            <div class="spec-card">
+                <div class="value">3 МГц</div>
+                <div class="label">Полоса пропускания</div>
+            </div>
+            <div class="spec-card">
+                <div class="value">DIP-8 / SOIC-8</div>
+                <div class="label">Тип корпуса</div>
+            </div>
+        </div>
+
+        <div class="main-info">
+            <div class="card-box">
+                <div>
+                    <h3>Цоколевка (DIP-8)</h3>
+                    <ul style="font-size: 0.85rem; padding-left: 18px; color: #cbd5e1; line-height: 1.6; margin-top: 10px;">
+                        <li><b>1. OUT1</b> — Выход ОУ 1</li>
+                        <li><b>2. IN1-</b> — Инвертирующий вход 1</li>
+                        <li><b>3. IN1+</b> — Неинвертирующий вход 1</li>
+                        <li><b>4. V- / GND</b> — Минус питания</li>
+                        <li><b>5. IN2+</b> — Неинвертирующий вход 2</li>
+                        <li><b>6. IN2-</b> — Инвертирующий вход 2</li>
+                        <li><b>7. OUT2</b> — Выход ОУ 2</li>
+                        <li><b>8. V+</b> — Плюс питания</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <div>
+                    <h3>Применение</h3>
+                    <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; margin-top: 8px;">
+                        Золотой стандарт для звуковой аппаратуры. Полевые транзисторы на входе обеспечивают высокое входное сопротивление и минимальные шумы. Используется в микрофонных предусилителях, темброблоках, эквалайзерах и фильтрах сабвуферов.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Аналоги TL072</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Модель</th>
+                    <th>Особенности</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><b>NE5532</b></td><td>Ещё более низкие шумы (аудиофильская классика)</td></tr>
+                <tr><td><b>TL082</b></td><td>Полный аналог (чуть выше уровень шума)</td></tr>
+                <tr><td><b>LM358</b></td><td>Общепромышленный двухканальный ОУ (может работать от +5V)</td></tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
