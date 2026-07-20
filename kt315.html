@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КТ315 — Цоколевка, характеристики, аналоги | Chip-Wiki</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0f172a; color: #f8fafc; padding: 20px; }
+
+        /* Центрирование главного блока по центру экрана */
+        .container { width: 100%; max-width: 800px; margin: 0 auto; }
+        
+        .nav-back { display: inline-block; color: #38bdf8; text-decoration: none; margin-bottom: 20px; font-weight: bold; }
+        .nav-back:hover { text-decoration: underline; }
+
+        header { background: #1e293b; padding: 25px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; }
+        h1 { color: #38bdf8; font-size: 2rem; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; font-size: 1.1rem; }
+
+        .main-info { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 20px; 
+            align-items: start;
+        }
+        .card-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; }
+
+        h2 { color: #f1f5f9; font-size: 1.3rem; margin: 25px 0 12px; border-left: 4px solid #38bdf8; padding-left: 10px; }
+        
+        table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #334155; color: #38bdf8; font-weight: 600; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: #26334d; }
+
+        .ad-banner {
+            background: rgba(56, 189, 248, 0.05); border: 1px dashed #38bdf8; border-radius: 12px;
+            padding: 20px; text-align: center; color: #94a3b8; margin: 20px 0;
+        }
+        .btn-buy {
+            display: inline-block; background: #38bdf8; color: #0f172a; padding: 12px 20px;
+            border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 15px; transition: 0.2s; text-align: center; width: 100%;
+        }
+        .btn-buy:hover { background: #7dd3fc; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="nav-back">← Назад к поиску</a>
+
+        <header>
+            <h1>КТ315</h1>
+            <div class="subtitle">Маломощный кремниевый высокочастотный NPN транзистор</div>
+        </header>
+
+        <!-- Рекламный блок -->
+        <div class="ad-banner">
+            🎯 [Место под рекламный баннер РСЯ]
+        </div>
+
+        <div class="main-info">
+            <!-- Блок распиновки -->
+            <div class="card-box">
+                <h3>Цоколевка (Корпус КТ-13)</h3>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">Вид спереди (со стороны маркировки)</p>
+                
+                <div style="text-align: center; margin: 15px 0;">
+                    <svg width="220" height="150" viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="10" width="120" height="70" rx="6" fill="#f97316" stroke="#ea580c" stroke-width="2"/>
+                        <polygon points="50,22 65,10 50,10" fill="#ea580c"/>
+                        
+                        <text x="110" y="48" font-family="Segoe UI, sans-serif" font-size="22" font-weight="bold" fill="#ffffff" text-anchor="middle">КТ315Б</text>
+                        
+                        <rect x="75" y="80" width="8" height="45" fill="#94a3b8"/>
+                        <rect x="106" y="80" width="8" height="45" fill="#94a3b8"/>
+                        <rect x="137" y="80" width="8" height="45" fill="#94a3b8"/>
+                        
+                        <circle cx="79" cy="138" r="10" fill="#38bdf8"/>
+                        <text x="79" y="142" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">Э</text>
+
+                        <circle cx="110" cy="138" r="10" fill="#ef4444"/>
+                        <text x="110" y="142" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">К</text>
+
+                        <circle cx="141" cy="138" r="10" fill="#22c55e"/>
+                        <text x="141" y="142" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">Б</text>
+                    </svg>
+                </div>
+
+                <ul style="margin-top: 10px; font-size: 0.85rem; padding-left: 18px; color: #cbd5e1; line-height: 1.6;">
+                    <li><b style="color: #38bdf8;">Э (Эмиттер)</b> — левый вывод</li>
+                    <li><b style="color: #ef4444;">К (Коллектор)</b> — центральный вывод</li>
+                    <li><b style="color: #22c55e;">Б (База)</b> — правый вывод</li>
+                </ul>
+            </div>
+
+            <!-- Область применения -->
+            <div class="card-box">
+                <h3>Применение и особенности</h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; margin-top: 8px;">
+                    Культовый советский транзистор. Используется в усилителях низкой и высокой частоты, генераторах, 
+                    ключах управления и логических схемах. Комплементарной парой (PNP аналогом) является <b>КТ361</b>.
+                </p>
+                
+                <div style="margin-top: 20px; border-top: 1px solid #334155; padding-top: 15px;">
+                    <div style="font-size: 0.85rem; color: #94a3b8;">Нужны современные аналоги в корпусе TO-92?</div>
+                    <a href="https://aliexpress.ru/popular/%d0%bd%d0%b0%d0%b1%d0%be%d1%80-%d1%82%d1%80%d0%b0%d0%bd%d0%b7%d0%b8%d1%81%d1%82%d0%be%d1%80%d0%be%d0%b2-bc547-bc557?g=y&page=1&searchInfo=YKtjsZvO0tPDA3W0L0Q9Im3uh7bYVfZzOS4841RKgxDjhNTxgfQuN1osMv3NO89ON0QbX5Q5tno5KuAZvCAamT-fbiK8WdmHBbK3lCSrAhW_2ARmSOkjGSHbnt1ZG2EM8njORqJL5L_BB4EROo_L-Zu7sDMpyPnaTThMMhVrfcdZS3CaIUuOGg%3D%3D" class="btn-buy" target="_blank">Набор транзисторов BC547 / BC557 на AliExpress →</a>
+                </div>
+            </div>
+        </div>
+
+        <h2>Предельные параметры по буквам (Индексы А–И)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Буква / Индекс</th>
+                    <th>Напряжение К-Э</th>
+                    <th>Ток коллектора</th>
+                    <th>Усиление (h21Э)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><b>КТ315А</b></td><td>15 В</td><td>100 мА</td><td>20 – 90</td></tr>
+                <tr><td><b>КТ315Б</b></td><td>20 В</td><td>100 мА</td><td>50 – 350</td></tr>
+                <tr><td><b>КТ315В</b></td><td>35 В</td><td>100 мА</td><td>30 – 120</td></tr>
+                <tr><td><b>КТ315Г</b></td><td>35 В</td><td>100 мА</td><td>50 – 350</td></tr>
+                <tr><td><b>КТ315Д</b></td><td>40 В</td><td>100 мА</td><td>30 – 120</td></tr>
+                <tr><td><b>КТ315Е</b></td><td>35 В</td><td>100 мА</td><td>50 – 350</td></tr>
+                <tr><td><b>КТ315И</b></td><td>60 В</td><td>100 мА</td><td>30 – 250</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Зарубежные аналоги</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Модель</th>
+                    <th>Корпус</th>
+                    <th>Параметры</th>
+                    <th>Особенности</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><b>BC547 / BC548</b></td><td>TO-92</td><td>45V / 100mA</td><td>Частый аналог. <i>Цоколевка: C-B-E!</i></td></tr>
+                <tr><td><b>2N3904</b></td><td>TO-92</td><td>40V / 200mA</td><td>Для ключей и ВЧ схем. Цоколевка E-B-C.</td></tr>
+                <tr><td><b>2N2222A</b></td><td>TO-92</td><td>40V / 600mA</td><td>Более мощный по току вариант.</td></tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
