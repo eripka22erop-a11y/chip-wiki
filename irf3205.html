@@ -7,59 +7,28 @@
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         body { background-color: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; }
-
         .container { width: 100%; max-width: 800px; }
-        
-        .nav-back { display: inline-block; color: #38bdf8; text-decoration: none; margin-bottom: 20px; font-weight: bold; transition: 0.2s; }
-        .nav-back:hover { color: #7dd3fc; text-decoration: underline; }
-
+        .nav-back { display: inline-block; color: #38bdf8; text-decoration: none; margin-bottom: 20px; font-weight: bold; }
+        .nav-back:hover { text-decoration: underline; }
         header { background: #1e293b; padding: 25px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; }
         h1 { color: #38bdf8; font-size: 2rem; margin-bottom: 5px; }
         .subtitle { color: #94a3b8; font-size: 1.1rem; }
 
-        /* Сетка ключевых параметров (Карточки) */
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .spec-card {
-            background: #1e293b;
-            padding: 16px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            text-align: center;
-        }
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .spec-card { background: #1e293b; padding: 16px; border-radius: 10px; border: 1px solid #334155; text-align: center; }
         .spec-card .value { font-size: 1.4rem; font-weight: bold; color: #38bdf8; margin-bottom: 4px; }
         .spec-card .label { font-size: 0.85rem; color: #94a3b8; }
 
-        .main-info { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 20px; 
-            margin-bottom: 20px; 
-            align-items: stretch;
-        }
+        .main-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px; }
         .card-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: space-between; }
 
         h2 { color: #f1f5f9; font-size: 1.3rem; margin: 25px 0 12px; border-left: 4px solid #38bdf8; padding-left: 10px; }
-        
-        table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; margin-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; margin-bottom: 20px; }
         th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #334155; }
         th { background: #334155; color: #38bdf8; font-weight: 600; }
         tr:last-child td { border-bottom: none; }
         tr:hover { background: #26334d; }
-
-        .ad-banner {
-            background: rgba(56, 189, 248, 0.05); border: 1px dashed #38bdf8; border-radius: 12px;
-            padding: 18px; text-align: center; color: #94a3b8; margin: 20px 0; font-size: 0.9rem;
-        }
-        .btn-buy {
-            display: block; background: #38bdf8; color: #0f172a; padding: 12px 20px;
-            border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 15px; transition: 0.2s; text-align: center;
-        }
-        .btn-buy:hover { background: #7dd3fc; }
     </style>
 </head>
 <body>
@@ -69,10 +38,9 @@
 
         <header>
             <h1>IRF3205</h1>
-            <div class="subtitle">Мощный полевой N-канальный MOSFET транзистор HEXFET</div>
+            <div class="subtitle">Мощный N-канальный полевой транзистор (HEXFET Power MOSFET)</div>
         </header>
 
-        <!-- Карточки главных параметров -->
         <div class="specs-grid">
             <div class="spec-card">
                 <div class="value">55 В</div>
@@ -92,72 +60,47 @@
             </div>
         </div>
 
-        <!-- Рекламный блок -->
-        <div class="ad-banner">
-            🎯 [Место под рекламный баннер РСЯ]
-        </div>
-
         <div class="main-info">
-            <!-- Блок распиновки -->
             <div class="card-box">
                 <div>
                     <h3>Цоколевка (Корпус TO-220AB)</h3>
-                    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">Вид спереди (надписью к себе)</p>
+                    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">Вид спереди (маркировкой к себе)</p>
                     
                     <div style="text-align: center; margin: 20px 0;">
-                        <svg width="220" height="150" viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Фланец под радиатор (металл) -->
-                            <path d="M 65 10 L 155 10 A 5 5 0 0 1 160 15 L 160 50 L 60 50 L 60 15 A 5 5 0 0 1 65 10 Z" fill="#94a3b8" stroke="#cbd5e1" stroke-width="2"/>
-                            <!-- Отверстие под винт -->
-                            <circle cx="110" cy="28" r="10" fill="#0f172a" stroke="#cbd5e1" stroke-width="2"/>
+                        <svg width="100%" height="auto" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid meet" style="max-width: 320px; display: block; margin: 0 auto;">
+                            <!-- Фланец/радиатор -->
+                            <rect x="110" y="10" width="100" height="30" fill="#94a3b8" rx="2"/>
+                            <circle cx="160" cy="22" r="7" fill="#0f172a"/>
                             
-                            <!-- Черный пластиковый корпус -->
-                            <rect x="55" y="45" width="110" height="50" rx="3" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                            <!-- Фаска/Срез -->
-                            <line x1="60" y1="48" x2="160" y2="48" stroke="#334155" stroke-width="2"/>
+                            <!-- Черный корпус -->
+                            <rect x="110" y="35" width="100" height="60" fill="#1e293b" stroke="#475569" stroke-width="2" rx="2"/>
                             
-                            <!-- Выводы (ножки) -->
-                            <!-- 1. Затвор (G) -->
-                            <rect x="72" y="95" width="12" height="40" fill="#cbd5e1"/>
-                            <!-- 2. Сток (D) -->
-                            <rect x="104" y="95" width="12" height="40" fill="#cbd5e1"/>
-                            <!-- 3. Исток (S) -->
-                            <rect x="136" y="95" width="12" height="40" fill="#cbd5e1"/>
+                            <!-- Ножки -->
+                            <rect x="122" y="95" width="12" height="40" fill="#cbd5e1"/>
+                            <rect x="154" y="95" width="12" height="40" fill="#cbd5e1"/>
+                            <rect x="186" y="95" width="12" height="40" fill="#cbd5e1"/>
                             
-                            <!-- Нумерация и названия выводов -->
-                            <text x="78" y="148" font-family="sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">1. G (Затвор)</text>
-                            <text x="110" y="148" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">2. D (Сток)</text>
-                            <text x="142" y="148" font-family="sans-serif" font-size="11" font-weight="bold" fill="#22c55e" text-anchor="middle">3. S (Исток)</text>
+                            <!-- Подписи разнесены по краям -->
+                            <text x="10" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="start">1. G (Затвор)</text>
+                            <text x="160" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">2. D (Сток)</text>
+                            <text x="310" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#22c55e" text-anchor="end">3. S (Исток)</text>
                         </svg>
                     </div>
                 </div>
 
                 <ul style="font-size: 0.85rem; padding-left: 18px; color: #cbd5e1; line-height: 1.6;">
-                    <li><b style="color: #38bdf8;">1. Gate (Затвор)</b> — управление транзистором</li>
-                    <li><b style="color: #ef4444;">2. Drain (Сток)</b> — подключен к фланцу под радиатор</li>
-                    <li><b style="color: #22c55e;">3. Source (Исток)</b> — обычно подключается к минус питания (GND)</li>
+                    <li><b style="color: #38bdf8;">1. Gate (Затвор)</b> — Управление транзистором</li>
+                    <li><b style="color: #ef4444;">2. Drain (Сток)</b> — Подключен к металлическому фланцу</li>
+                    <li><b style="color: #22c55e;">3. Source (Исток)</b> — Подключается к минусу питания (GND)</li>
                 </ul>
             </div>
 
-            <!-- Область применения -->
             <div class="card-box">
                 <div>
                     <h3>Применение и особенности</h3>
                     <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; margin-top: 8px;">
-                        IRF3205 славится экстремально низким сопротивлением открытого канала (всего 8 мОм). 
-                        Благодаря этому он практически не греется на токах до 15-20А даже без радиатора.
+                        IRF3205 славится экстремально низким сопротивлением открытого канала (всего 8 мОм). Благодаря этому он практически не греется на токах до 15–20A даже без радиатора. Используется в автомобильных инверторах (12V → 220V), ШИМ-регуляторах мощных моторов и споттерах.
                     </p>
-                    <ul style="font-size: 0.9rem; color: #94a3b8; margin-top: 10px; padding-left: 18px; line-height: 1.5;">
-                        <li>Автомобильные инверторы (12V ➔ 220V)</li>
-                        <li>ШИМ-регуляторы скорости мощных моторов</li>
-                        <li>Контроллеры электротранспорта</li>
-                        <li>Мощные импульсные БП и плато сварочников</li>
-                    </ul>
-                </div>
-                
-                <div style="margin-top: 20px; border-top: 1px solid #334155; padding-top: 15px;">
-                    <div style="font-size: 0.85rem; color: #94a3b8;">Нужен оригинальный транзистор?</div>
-                    <a href="#" class="btn-buy" target="_blank">Набор IRF3205 (10 шт.) на AliExpress →</a>
                 </div>
             </div>
         </div>
@@ -175,8 +118,7 @@
             </thead>
             <tbody>
                 <tr><td><b>IRFZ44N</b></td><td>55 В</td><td>49 А</td><td>17.5 мОм</td><td>TO-220</td></tr>
-                <tr><td><b>IRF1404</b></td><td>40 В</td><td>202 А</td><td>4 мОм</td><td>TO-220</td></tr>
-                <tr><td><b>IRFB3077</b></td><td>75 В</td><td>210 А</td><td>3.3 мОм</td><td>TO-220</td></tr>
+                <tr><td><b>IRF1405</b></td><td>55 В</td><td>169 А</td><td>5.3 мОм</td><td>TO-220</td></tr>
                 <tr><td><b>STP75NF75</b></td><td>75 В</td><td>80 А</td><td>11 мОм</td><td>TO-220</td></tr>
             </tbody>
         </table>
