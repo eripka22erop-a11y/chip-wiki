@@ -38,7 +38,7 @@
 
         <header>
             <h1>IRFZ44N</h1>
-            <div class="subtitle">Мощный N-канальный полевой транзистор (Power MOSFET)</div>
+            <div class="subtitle">Мощный полевой N-канальный MOSFET транзистор</div>
         </header>
 
         <div class="specs-grid">
@@ -55,7 +55,7 @@
                 <div class="label">Сопротивление (R<sub>DS(on)</sub>)</div>
             </div>
             <div class="spec-card">
-                <div class="value">TO-220AB</div>
+                <div class="value">TO-220</div>
                 <div class="label">Тип корпуса</div>
             </div>
         </div>
@@ -65,60 +65,36 @@
                 <div>
                     <h3>Цоколевка (TO-220)</h3>
                     <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">Вид спереди (маркировкой к себе)</p>
-                    
-                    <div style="text-align: center; margin: 20px 0;">
-                        <svg width="100%" height="auto" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid meet" style="max-width: 320px; display: block; margin: 0 auto;">
-                            <!-- Фланец/радиатор -->
-                            <rect x="110" y="10" width="100" height="30" fill="#94a3b8" rx="2"/>
-                            <circle cx="160" cy="22" r="7" fill="#0f172a"/>
-                            
-                            <!-- Черный корпус -->
-                            <rect x="110" y="35" width="100" height="60" fill="#1e293b" stroke="#475569" stroke-width="2" rx="2"/>
-                            
-                            <!-- Ножки -->
-                            <rect x="122" y="95" width="12" height="40" fill="#cbd5e1"/>
-                            <rect x="154" y="95" width="12" height="40" fill="#cbd5e1"/>
-                            <rect x="186" y="95" width="12" height="40" fill="#cbd5e1"/>
-                            
-                            <!-- Подписи разнесены по X -->
-                            <text x="10" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="start">1. G (Затвор)</text>
-                            <text x="160" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">2. D (Сток)</text>
-                            <text x="310" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#22c55e" text-anchor="end">3. S (Исток)</text>
-                        </svg>
-                    </div>
+                    <ul style="font-size: 0.85rem; padding-left: 18px; color: #cbd5e1; line-height: 1.6; margin-top: 10px;">
+                        <li><b style="color: #38bdf8;">1. Gate (Затвор):</b> Управление (10V для полного открытия)</li>
+                        <li><b style="color: #ef4444;">2. Drain (Сток):</b> Подключается к нагрузке / фланец</li>
+                        <li><b style="color: #22c55e;">3. Source (Исток):</b> Минус питания (GND)</li>
+                    </ul>
                 </div>
-
-                <ul style="font-size: 0.85rem; padding-left: 18px; color: #cbd5e1; line-height: 1.6;">
-                    <li><b style="color: #38bdf8;">1. Gate (Затвор)</b> — Управление (открывается при 4.5V...10V)</li>
-                    <li><b style="color: #ef4444;">2. Drain (Сток)</b> — Силовой выход (соединен с металлическим фланцем)</li>
-                    <li><b style="color: #22c55e;">3. Source (Исток)</b> — Общий / Минус питания</li>
-                </ul>
             </div>
 
             <div class="card-box">
                 <div>
-                    <h3>Применение</h3>
+                    <h3>Особенность с Ардуино (5V)</h3>
                     <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; margin-top: 8px;">
-                        Один из самых народных силовых ключей. Применяется в инверторах 12V-220V, ZVS-драйверах, регуляторах мощности моторов постоянного тока (ШИМ), индукционных нагревателях и блоках бесперебойного питания.
+                        IRFZ44N не является Logic-Level транзистором! Для полного открытия от 5V лог. уровня Ардуино лучше применять <b>IRL Z44N</b> (буква L = Logic Level).
                     </p>
                 </div>
             </div>
         </div>
 
-        <h2>Аналоги IRFZ44N</h2>
+        <h2>Аналоги</h2>
         <table>
             <thead>
                 <tr>
                     <th>Модель</th>
-                    <th>Напряжение</th>
-                    <th>Ток</th>
-                    <th>Сопротивление</th>
+                    <th>Напряжение / Ток</th>
+                    <th>Тип</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td><b>IRF3205</b></td><td>55 В</td><td>110 А</td><td>8.0 мОм (более мощный)</td></tr>
-                <tr><td><b>STP55NF06</b></td><td>60 В</td><td>50 А</td><td>18 мОм</td></tr>
-                <tr><td><b>2N7000</b></td><td>60 В</td><td>0.2 А</td><td>Маломощный сигнал (SOT-23 / TO-92)</td></tr>
+                <tr><td><b>IRLZ44N</b></td><td>55 В / 47 А</td><td>Logic-Level (открывается полностью от 5V)</td></tr>
+                <tr><td><b>IRF3205</b></td><td>55 В / 110 А</td><td>Очень мощный аналог с низким R_ds</td></tr>
             </tbody>
         </table>
 
