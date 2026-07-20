@@ -3,157 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chip-Wiki — Справочник радиодеталей</title>
+    <title>Chip-Wiki — Справочник радиокомпонентов</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        body { background-color: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 800px; text-align: center; margin-top: 40px; }
-        
-        /* Кнопка с тремя полосками (Бургер) */
+        * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0f172a; color: #f8fafc; min-height: 100vh; padding: 20px; display: flex; justify-content: center; }
+
+        .container { width: 100%; max-width: 1000px; margin: 0 auto; }
+
+        /* Шапка */
+        header { text-align: center; margin-bottom: 25px; margin-top: 10px; }
+        h1 { color: #38bdf8; font-size: 2.2rem; margin-bottom: 6px; }
+        .subtitle { color: #94a3b8; font-size: 1rem; }
+
+        /* Кнопка вызова меню */
         .menu-btn {
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 1000;
             background: #1e293b;
             border: 1px solid #334155;
             color: #38bdf8;
             font-size: 1.5rem;
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
+            padding: 8px 14px;
+            border-radius: 8px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
+            z-index: 1001;
         }
-        .menu-btn:hover { border-color: #38bdf8; background: #334155; }
 
-        /* Выезжающая шторка (Меню) */
+        /* Выезжающее меню */
         .sidebar {
             position: fixed;
             top: 0;
-            right: -300px; /* Прячем за правый край */
+            right: -300px;
             width: 280px;
             height: 100%;
             background: #1e293b;
             border-left: 1px solid #334155;
-            box-shadow: -5px 0 25px rgba(0,0,0,0.5);
-            z-index: 999;
-            transition: 0.3s ease;
-            padding: 80px 20px 20px;
-            text-align: left;
+            padding: 60px 20px 20px;
+            z-index: 1000;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
         }
-        .sidebar.active { right: 0; } /* Выезжает при нажатии */
+        .sidebar.active { right: 0; }
 
-        /* Затемнение фона при открытом меню */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(3px);
-            z-index: 998;
             display: none;
+            z-index: 999;
         }
         .overlay.active { display: block; }
 
-        .sidebar h2 { color: #38bdf8; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 8px; }
-
-        /* Элементы меню */
         .menu-item {
             display: block;
-            padding: 12px 15px;
-            color: #94a3b8;
+            color: #cbd5e1;
             text-decoration: none;
-            border-radius: 8px;
-            margin-bottom: 8px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 6px;
             cursor: pointer;
-            transition: 0.2s;
-            font-weight: 500;
+            font-size: 0.95rem;
+            transition: background 0.2s;
         }
-        .menu-item:hover { background: #334155; color: #fff; }
-        .menu-item.active { background: #38bdf8; color: #0f172a; font-weight: bold; }
+        .menu-item:hover, .menu-item.active { background: #334155; color: #38bdf8; }
 
-        h1 { color: #38bdf8; font-size: 2.2rem; margin-bottom: 10px; }
-        p.subtitle { color: #94a3b8; font-size: 1rem; margin-bottom: 25px; }
-
+        /* Поиск и Тэги */
         .search-box {
-            width: 100%; padding: 14px 20px; font-size: 1rem; border-radius: 10px;
-            border: 1px solid #334155; background: #1e293b; color: #fff; margin-bottom: 25px; outline: none;
+            width: 100%;
+            padding: 14px 18px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            color: #f8fafc;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            outline: none;
+            transition: border-color 0.2s;
         }
         .search-box:focus { border-color: #38bdf8; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
-        
-        .card {
-            background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px;
-            text-align: left; text-decoration: none; color: inherit; transition: 0.2s; display: block;
+        .tags-container { display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap; justify-content: center; }
+        .tag-btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s ease;
         }
-        .card:hover { border-color: #38bdf8; transform: translateY(-2px); }
+        .tag-btn:hover, .tag-btn.active {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+            font-weight: 600;
+        }
+
+        /* Сетка карточек */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #38bdf8;
+            box-shadow: 0 10px 20px -5px rgba(56, 189, 248, 0.15);
+        }
         .card h3 { color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px; }
-        .card .type { color: #38bdf8; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
-        .card .desc { color: #94a3b8; font-size: 0.85rem; line-height: 1.4; }
+        .card .type { color: #38bdf8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
+        .card .desc { color: #94a3b8; font-size: 0.9rem; line-height: 1.4; }
     </style>
 </head>
 <body>
 
-    <!-- Кнопка ☰ в углу -->
+    <!-- Кнопка вызова меню -->
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-    <!-- Затемнение заднего фона -->
+    <!-- Затемнение фона при открытом меню -->
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-   
-    <!-- Выезжающее меню -->
+    <!-- Выезжающее боковое меню -->
     <div class="sidebar" id="sidebar">
-        <h2>Категории</h2>
+        <h2 style="color: #94a3b8; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 10px; padding-left: 10px;">Категории</h2>
         <div class="menu-item active" onclick="selectCategory('all', this)">Все компоненты</div>
         <div class="menu-item" onclick="selectCategory('transistor', this)">Транзисторы</div>
         <div class="menu-item" onclick="selectCategory('diode', this)">Диоды</div>
         <div class="menu-item" onclick="selectCategory('ic', this)">Микросхемы</div>
-        <div class="menu-item" onclick="selectCategory('opto', this)">Оптоэлектроника</div>
-       
-            </a>
+        <div class="menu-item" onclick="selectCategory('opto', this)">Опто / Датчики</div>
 
-        <!-- Ссылка на шпаргалки -->
-        <a href="cheatsheet.html" class="menu-item" style="color: #38bdf8; margin-top: 15px; border-top: 1px solid #334155; padding-top: 12px; display: block; text-decoration: none;">📚 Шпаргалки и Полезное</a>
-        <a href="calc.html" class="menu-item" style="color: #22c55e; margin-top: 8px; display: block; text-decoration: none;">🧮 Калькуляторы</a>
-        <a href="schemes.html" class="menu-item" style="color: #eab308; margin-top: 8px; display: block; text-decoration: none;">⚡ Готовые схемы</a>
+        <div style="border-top: 1px solid #334155; margin-top: 15px; padding-top: 15px;">
+            <a href="cheatsheet.html" class="menu-item" style="color: #38bdf8;">🎭 Шпаргалки и Полезное</a>
+            <a href="calc.html" class="menu-item" style="color: #22c55e;">🧮 Калькуляторы</a>
+            <a href="schemes.html" class="menu-item" style="color: #eab308;">⚡ Готовые схемы</a>
+        </div>
     </div>
 
     <div class="container">
-        <h1>Chip-Wiki</h1>
-        <p class="subtitle">Быстрый справочник цоколевок, характеристик и аналогов</p>
+        <header>
+            <h1>Chip-Wiki</h1>
+            <p class="subtitle">Быстрый справочник цоколевок, характеристик и аналогов</p>
+        </header>
 
-        <input type="text" id="searchInput" onkeyup="filterComponents()" class="search-box" placeholder="Поиск детали">
-       <button onclick="selectCategory('all', this)" class="tag-btn active">Все</button>
-<button onclick="selectCategory('transistor', this)" class="tag-btn">Транзисторы</button>
-<button onclick="selectCategory('ic', this)" class="tag-btn">Микросхемы</button>
-<button onclick="selectCategory('diode', this)" class="tag-btn">Диоды</button>
-<button onclick="selectCategory('opto', this)" class="tag-btn">Опто/Датчики</button>
-</div>
+        <input type="text" id="searchInput" onkeyup="filterComponents()" class="search-box" placeholder="Поиск детали (например: IRFZ44N, 1N4007, Arduino)...">
 
-<style>
-    .tag-btn {
-        background: #1e293b;
-        border: 1px solid #334155;
-        color: #94a3b8;
-        padding: 6px 14px;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 0.85rem;
-        transition: all 0.2s ease;
-    }
-    .tag-btn:hover, .tag-btn.active {
-        background: #38bdf8;
-        color: #0f172a;
-        border-color: #38bdf8;
-        font-weight: 600;
-    }
-</style>
+        <!-- Теги-фильтры -->
+        <div class="tags-container">
+            <button onclick="selectCategory('all', this)" class="tag-btn active">Все</button>
+            <button onclick="selectCategory('transistor', this)" class="tag-btn">Транзисторы</button>
+            <button onclick="selectCategory('ic', this)" class="tag-btn">Микросхемы</button>
+            <button onclick="selectCategory('diode', this)" class="tag-btn">Диоды</button>
+            <button onclick="selectCategory('opto', this)" class="tag-btn">Опто/Датчики</button>
+        </div>
 
-       <div class="grid" id="cardsGrid">
+        <!-- Сетка карточек -->
+        <div class="grid" id="cardsGrid">
+
             <!-- Транзисторы -->
             <a href="irf3205.html" class="card" data-category="transistor">
                 <h3>IRF3205</h3>
@@ -163,25 +184,7 @@
 
             <a href="irfz44n.html" class="card" data-category="transistor">
                 <h3>IRFZ44N</h3>
-                <div class="type">Полевой транзистор (N-Ch)</div>
-                <div class="desc">55V / 49A / TO-220<br>Сопротивление: 17.5 мОм</div>
-            </a>
-           <!-- Светодиоды, датчики и симисторы -->
-            <a href="ws2812b.html" class="card" data-category="opto">
-                <h3>WS2812B</h3>
-                <div class="type">Адресный RGB светодиод</div>
-                <div class="desc">5V / 800 кГц / 5050<br>Управление по одному проводу (Data)</div>
-            </a>
-
-            <a href="hc-sr04.html" class="card" data-category="ic">
-                <h3>HC-SR04</h3>
-                <div class="type">Ультразвуковой дальномер</div>
-                <div class="desc">5V / 2cm – 400cm / 40kHz<br>Измерение расстояния (Trig/Echo)</div>
-            </a>
-
-            <a href="irfz44n.html" class="card" data-category="transistor">
-                <h3>IRFZ44N</h3>
-                <div class="type">Мощный N-channel MOSFET</div>
+                <div class="type">Мощный N-Channel MOSFET</div>
                 <div class="desc">55V / 49A / TO-220<br>Ключи, ШИМ, управление моторами</div>
             </a>
 
@@ -190,134 +193,142 @@
                 <div class="type">Симистор (TRIAC)</div>
                 <div class="desc">600V / 4A / TO-220AB<br>Управление нагрузкой 220V AC</div>
             </a>
-           <!-- Контроллеры / Платы -->
-            <a href="arduino-nano.html" class="card" data-category="ic">
-                <h3>Arduino Nano</h3>
-                <div class="type">Микроконтроллер (ATmega328P)</div>
-                <div class="desc">5V / 16 МГц / Mini-USB (CH340)<br>Компактная плата для макеток</div>
-            </a>
-
-            <a href="arduino-uno.html" class="card" data-category="ic">
-                <h3>Arduino Uno R3</h3>
-                <div class="type">Микроконтроллер (ATmega328P)</div>
-                <div class="desc">5V / 16 МГц / DIP-28<br>Народный стандарт для прототипов</div>
-            </a>
 
             <a href="kt315.html" class="card" data-category="transistor">
                 <h3>КТ315</h3>
-                <div class="type">Биполярный транзистор (NPN)</div>
-                <div class="desc">15V–60V / 0.1A<br>Корпус: КТ-13 / TO-92</div>
+                <div class="type">Биполярный NPN</div>
+                <div class="desc">15V – 60V / 0.1A / КТ-13<br>Классический советский транзистор</div>
             </a>
 
             <a href="kt361.html" class="card" data-category="transistor">
                 <h3>КТ361</h3>
-                <div class="type">Биполярный транзистор (PNP)</div>
-                <div class="desc">35V–45V / 0.05A<br>Комплементарная пара к КТ315</div>
+                <div class="type">Биполярный PNP</div>
+                <div class="desc">35V / 0.05A / КТ-13<br>Комплементарная пара для КТ315</div>
+            </a>
+
+            <a href="kt819.html" class="card" data-category="transistor">
+                <h3>КТ819</h3>
+                <div class="type">Мощный NPN</div>
+                <div class="desc">40V – 100V / 10A / TO-220 / ТО-3<br>Усилители НЧ, блоки питания</div>
             </a>
 
             <a href="2n2222.html" class="card" data-category="transistor">
-                <h3>2N2222</h3>
-                <div class="type">Биполярный транзистор (NPN)</div>
-                <div class="desc">40V / 0.8A / TO-92<br>Быстродействующий ключик</div>
-            </a>
-           <!-- Новые компоненты -->
-            <a href="kt819.html" class="card" data-category="transistor">
-                <h3>КТ819Г</h3>
-                <div class="type">Мощный биполярный (NPN)</div>
-                <div class="desc">100V / 10A / TO-220 (КТ-28)<br>Усилители, блоки питания</div>
+                <h3>2N2222 (KN2222)</h3>
+                <div class="type">Маломощный NPN</div>
+                <div class="desc">40V / 0.8A / TO-92<br>Универсальный ключ и усилитель</div>
             </a>
 
-            <a href="tl494.html" class="card" data-category="ic">
-                <h3>TL494</h3>
-                <div class="type">ШИМ-контроллер</div>
-                <div class="desc">40V / 200mA / DIP-16<br>Двухтактные БП, инверторы</div>
+            <!-- Оптоэлектроника и Датчики -->
+            <a href="ws2812b.html" class="card" data-category="opto">
+                <h3>WS2812B</h3>
+                <div class="type">Адресный RGB светодиод</div>
+                <div class="desc">5V / 800 кГц / 5050<br>Управление по одному проводу (Data)</div>
             </a>
 
-            <a href="lm317.html" class="card" data-category="ic">
-                <h3>LM317T</h3>
-                <div class="type">Регулируемый стабилизатор</div>
-                <div class="desc">1.25V – 37V / 1.5A / TO-220<br>Идеален для самодельных ЛБП</div>
+            <a href="hc-sr04.html" class="card" data-category="opto">
+                <h3>HC-SR04</h3>
+                <div class="type">Ультразвуковой дальномер</div>
+                <div class="desc">5V / 2cm – 400cm / 40kHz<br>Измерение расстояния (Trig/Echo)</div>
             </a>
 
-            <a href="tl072.html" class="card" data-category="ic">
-                <h3>TL072</h3>
-                <div class="type">Двойной ОУ (JFET)</div>
-                <div class="desc">±18V / Low Noise / DIP-8<br>Звуковые тракты, фильтры</div>
+            <a href="pc817.html" class="card" data-category="opto">
+                <h3>PC817</h3>
+                <div class="type">Оптопара (Optocoupler)</div>
+                <div class="desc">5000V RMS / DIP-4<br>Гальваническая развязка цепей</div>
             </a>
 
-            <!-- Микросхемы / Стабилизаторы -->
+            <!-- Микросхемы и Платы -->
             <a href="ne555.html" class="card" data-category="ic">
                 <h3>NE555</h3>
                 <div class="type">Аналоговый таймер</div>
-                <div class="desc">Питание: 4.5V – 15V<br>Корпус: DIP-8 / SOIC-8</div>
+                <div class="desc">4.5V – 16V / DIP-8<br>Генератор импульсов, ШИМ</div>
             </a>
 
-            <a href="l7805.html" class="card" data-category="ic">
-                <h3>L7805CV</h3>
-                <div class="type">Линейный стабилизатор 5V</div>
-                <div class="desc">Выход: 5V / 1.5A<br>Корпус: TO-220</div>
+            <a href="lm317.html" class="card" data-category="ic">
+                <h3>LM317</h3>
+                <div class="type">Регулируемый стабилизатор</div>
+                <div class="desc">1.25V – 37V / 1.5A / TO-220<br>Линейный регулятор напряжения</div>
+            </a>
+
+            <a href="ams1117.html" class="card" data-category="ic">
+                <h3>AMS1117</h3>
+                <div class="type">LDO Стабилизатор</div>
+                <div class="desc">3.3V / 5.0V / 1A / SOT-223<br>Питание для ESP8266/ESP32/МК</div>
             </a>
 
             <a href="tl431.html" class="card" data-category="ic">
                 <h3>TL431</h3>
                 <div class="type">Регулируемый стабилитрон</div>
-                <div class="desc">2.5V – 36V / TO-92 / SOT-23<br>Точный источник опорного напряжения</div>
+                <div class="desc">2.5V – 36V / TO-92<br>Точный источник опорного напряжения</div>
             </a>
 
-            <a href="ams1117.html" class="card" data-category="ic">
-                <h3>AMS1117-3.3</h3>
-                <div class="type">Стабилизатор питания (LDO)</div>
-                <div class="desc">Выход: 3.3V / 1A<br>Корпус: SOT-223</div>
+            <a href="tl494.html" class="card" data-category="ic">
+                <h3>TL494</h3>
+                <div class="type">ШИМ-контроллер</div>
+                <div class="desc">40V / 200mA / DIP-16<br>Сердце БП ПК и инверторов</div>
+            </a>
+
+            <a href="tl072.html" class="card" data-category="ic">
+                <h3>TL072</h3>
+                <div class="type">Двойной ОУ (JFET)</div>
+                <div class="desc">±18V / DIP-8<br>Малошумящий операционный усилитель</div>
+            </a>
+
+            <a href="arduino-nano.html" class="card" data-category="ic">
+                <h3>Arduino Nano</h3>
+                <div class="type">Плата микроконтроллера</div>
+                <div class="desc">ATmega328P / 5V / CH340 / Type-C<br>Компактная плата для проектов</div>
+            </a>
+
+            <a href="arduino-uno.html" class="card" data-category="ic">
+                <h3>Arduino Uno R3</h3>
+                <div class="type">Плата микроконтроллера</div>
+                <div class="desc">ATmega328P / 5V / DIP-28<br>Классическая отладочная плата</div>
             </a>
 
             <!-- Диоды -->
             <a href="1n4007.html" class="card" data-category="diode">
                 <h3>1N4007</h3>
                 <div class="type">Выпрямительный диод</div>
-                <div class="desc">1000V / 1A<br>Корпус: DO-41</div>
+                <div class="desc">1000V / 1A / DO-41<br>Базовый выпрямительный диод</div>
             </a>
 
             <a href="ss14.html" class="card" data-category="diode">
-                <h3>SS14 / SS34</h3>
+                <h3>SS14</h3>
                 <div class="type">Диод Шоттки (SMD)</div>
-                <div class="desc">40V / 1A–3A<br>Корпус: SMA / SMB</div>
+                <div class="desc">40V / 1A / SMA (DO-214AC)<br>Низкое падение напряжения</div>
             </a>
 
-            <!-- Оптоэлектроника -->
-            <a href="pc817.html" class="card" data-category="opto">
-                <h3>PC817</h3>
-                <div class="type">Оптопара (Оптотрон)</div>
-                <div class="desc">Изоляция: 5000V RMS<br>Корпус: DIP-4 / SOP-4</div>
-            </a>
         </div>
     </div>
 
     <script>
         let currentCategory = 'all';
 
-        // Открытие/закрытие боковой панели
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
         }
 
-        // Выбор категории из меню
-        function selectCategory(category, item) {
+        function selectCategory(category, element) {
             currentCategory = category;
 
-            // Переключаем подсветку активного пункта меню
-            let items = document.querySelectorAll('.menu-item');
-            items.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
+            // Синхронизируем активность кнопок тегов и меню
+            document.querySelectorAll('.tag-btn, .menu-item').forEach(el => {
+                if (el.getAttribute('onclick') && el.getAttribute('onclick').includes(`'${category}'`)) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
 
-            // Закрываем меню после выбора
-            toggleMenu();
+            // Закрываем меню, если кликнули из боковой панели
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
 
-            // Фильтруем карточки
             filterComponents();
         }
 
-        // Фильтрация по поиску и категории
         function filterComponents() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let cards = document.getElementsByClassName('card');
@@ -338,6 +349,5 @@
             }
         }
     </script>
-
 </body>
 </html>
