@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шпаргалки радиолюбителя | Chip-Wiki</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 800px; }
+        .nav-back { display: inline-block; color: #38bdf8; text-decoration: none; margin-bottom: 20px; font-weight: bold; }
+        .nav-back:hover { text-decoration: underline; }
+        header { background: #1e293b; padding: 25px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 25px; }
+        h1 { color: #38bdf8; font-size: 2rem; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; font-size: 1.1rem; }
+
+        .card-box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 25px; }
+        h2 { color: #f1f5f9; font-size: 1.3rem; margin-bottom: 15px; border-left: 4px solid #38bdf8; padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; background: #0f172a; border-radius: 8px; overflow: hidden; border: 1px solid #334155; margin-top: 10px; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #334155; font-size: 0.9rem; }
+        th { background: #334155; color: #38bdf8; font-weight: 600; }
+        tr:last-child td { border-bottom: none; }
+
+        .calc-box { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .calc-input { flex: 1; min-width: 140px; }
+        .calc-input label { display: block; color: #94a3b8; font-size: 0.8rem; margin-bottom: 5px; }
+        .calc-input input { width: 100%; padding: 10px; border-radius: 6px; background: #0f172a; color: #fff; border: 1px solid #334155; outline: none; }
+        .calc-input input:focus { border-color: #38bdf8; }
+
+        .result-badge { background: #0f172a; padding: 12px; border-radius: 8px; text-align: center; border: 1px dashed #334155; color: #38bdf8; font-weight: bold; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="nav-back">← Назад на главную</a>
+
+        <header>
+            <h1>Шпаргалки и Полезное</h1>
+            <div class="subtitle">Базовые формулы, таблицы маркировок и обозначения схем</div>
+        </header>
+
+        <!-- 1. Быстрый калькулятор резистора для светодиода -->
+        <div class="card-box">
+            <h2>Расчет резистора для светодиода</h2>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 15px;">
+                Формула: <b>R = (U<sub>питания</sub> - U<sub>светодиода</sub>) / I<sub>светодиода</sub></b>
+            </p>
+
+            <div class="calc-box">
+                <div class="calc-input">
+                    <label>Напряжение питания (В)</label>
+                    <input type="number" id="vSupply" value="12" step="0.1" oninput="calcLed()">
+                </div>
+                <div class="calc-input">
+                    <label>Падение на LED (В)</label>
+                    <input type="number" id="vLed" value="2.0" step="0.1" oninput="calcLed()">
+                </div>
+                <div class="calc-input">
+                    <label>Ток LED (мА)</label>
+                    <input type="number" id="iLed" value="20" step="1" oninput="calcLed()">
+                </div>
+            </div>
+
+            <div class="result-badge" id="ledResult">
+                Нужен резистор: 500 Ом (мощность от 0.25 Вт)
+            </div>
+        </div>
+
+        <!-- 2. Буквенные обозначения компонентов -->
+        <div class="card-box">
+            <h2>Обозначения компонентов на схемах (ГОСТ / ISO)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Буква</th>
+                        <th>Элемент</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><b>R</b></td><td>Резистор</td><td>R1, R2</td></tr>
+                    <tr><td><b>C</b></td><td>Конденсатор</td><td>C10 (электролит / керамика)</td></tr>
+                    <tr><td><b>L</b></td><td>Катушка индуктивности / Дроссель</td><td>L1</td></tr>
+                    <tr><td><b>VD</b></td><td>Диод / Стабилитрон / Светодиод</td><td>VD1 (1N4007)</td></tr>
+                    <tr><td><b>VT</b></td><td>Транзистор (биполярный / полевой)</td><td>VT1 (IRF3205)</td></tr>
+                    <tr><td><b>DA / U</b></td><td>Аналоговая микросхема / Чип</td><td>DA1 (NE555)</td></tr>
+                    <tr><td><b>K</b></td><td>Реле электромагнитное</td><td>K1</td></tr>
+                    <tr><td><b>T / TV</b></td><td>Трансформатор</td><td>T1</td></tr>
+                    <tr><td><b>Fuse / FU</b></td><td>Предохранитель</td><td>FU1</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. Маркировка керамических конденсаторов -->
+        <div class="card-box">
+            <h2>Расшифровка трехзначной маркировки конденсаторов</h2>
+            <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 10px;">
+                Первые две цифры — значение, третья — количество нулей (в пикофарадах <b>пФ</b>):
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Код на корпусе</th>
+                        <th>Значение в пФ</th>
+                        <th>Перевод в нФ / мкФ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><b>102</b></td><td>1 000 пФ</td><td>1 нФ / 0.001 мкФ</td></tr>
+                    <tr><td><b>103</b></td><td>10 000 пФ</td><td>10 нФ / 0.01 мкФ</td></tr>
+                    <tr><td><b>104</b></td><td>100 000 пФ</td><td>100 нФ / 0.1 мкФ (самый ходовой!)</td></tr>
+                    <tr><td><b>224</b></td><td>220 000 пФ</td><td>220 нФ / 0.22 мкФ</td></tr>
+                    <tr><td><b>474</b></td><td>470 000 пФ</td><td>470 нФ / 0.47 мкФ</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        function calcLed() {
+            let vs = parseFloat(document.getElementById('vSupply').value) || 0;
+            let vl = parseFloat(document.getElementById('vLed').value) || 0;
+            let il = parseFloat(document.getElementById('iLed').value) || 0;
+
+            if (vs <= vl || il <= 0) {
+                document.getElementById('ledResult').innerText = "Напряжение питания должно быть больше падения на LED!";
+                return;
+            }
+
+            let iAmp = il / 1000;
+            let r = (vs - vl) / iAmp;
+            let power = (vs - vl) * iAmp;
+
+            let pText = "0.125 Вт";
+            if (power > 0.5) pText = "1 Вт+";
+            else if (power > 0.25) pText = "0.5 Вт";
+            else if (power > 0.125) pText = "0.25 Вт";
+
+            document.getElementById('ledResult').innerText = 
+                "Нужен резистор: " + r.toFixed(1) + " Ом ( рассеиваемая мощность ~" + power.toFixed(2) + " Вт → бери на " + pText + ")";
+        }
+
+        // Авторасчет при загрузке
+        calcLed();
+    </script>
+
+</body>
+</html>
