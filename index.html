@@ -113,6 +113,7 @@
         <div class="menu-item" onclick="selectCategory('ic', this)">Микросхемы</div>
         <div class="menu-item" onclick="selectCategory('resistor', this)">Резисторы</div>
         <div class="menu-item" onclick="selectCategory('capacitor', this)">Конденсаторы</div>
+        <div class="menu-item" onclick="selectCategory('opto', this)">Оптоэлектроника</div>
     </div>
 
     <div class="container">
@@ -121,17 +122,12 @@
 
         <input type="text" id="searchInput" onkeyup="filterComponents()" class="search-box" placeholder="Поиск детали (например: IRF3205, NE555, КТ315)...">
 
-        <div class="grid" id="cardsGrid">
+       <div class="grid" id="cardsGrid">
+            <!-- Транзисторы -->
             <a href="irf3205.html" class="card" data-category="transistor">
                 <h3>IRF3205</h3>
                 <div class="type">Полевой транзистор (N-Ch)</div>
                 <div class="desc">55V / 110A / TO-220<br>Сопротивление: 8 мОм</div>
-            </a>
-
-            <a href="ne555.html" class="card" data-category="ic">
-                <h3>NE555</h3>
-                <div class="type">Аналоговый таймер</div>
-                <div class="desc">Питание: 4.5V – 15V<br>Корпус: DIP-8 / SOIC-8</div>
             </a>
 
             <a href="kt315.html" class="card" data-category="transistor">
@@ -140,10 +136,49 @@
                 <div class="desc">15V–60V / 0.1A<br>Корпус: КТ-13 / TO-92</div>
             </a>
 
+            <a href="2n2222.html" class="card" data-category="transistor">
+                <h3>2N2222</h3>
+                <div class="type">Биполярный транзистор (NPN)</div>
+                <div class="desc">40V / 0.8A / TO-92<br>Быстродействующий ключик</div>
+            </a>
+
+            <!-- Микросхемы -->
+            <a href="ne555.html" class="card" data-category="ic">
+                <h3>NE555</h3>
+                <div class="type">Аналоговый таймер</div>
+                <div class="desc">Питание: 4.5V – 15V<br>Корпус: DIP-8 / SOIC-8</div>
+            </a>
+
+            <a href="tl431.html" class="card" data-category="ic">
+                <h3>TL431</h3>
+                <div class="type">Регулируемый стабилитрон</div>
+                <div class="desc">2.5V – 36V / TO-92 / SOT-23<br>Точный источник опорного напряжения</div>
+            </a>
+
+            <a href="ams1117.html" class="card" data-category="ic">
+                <h3>AMS1117-3.3</h3>
+                <div class="type">Стабилизатор питания (LDO)</div>
+                <div class="desc">Выход: 3.3V / 1A<br>Корпус: SOT-223</div>
+            </a>
+
+            <!-- Диоды -->
             <a href="1n4007.html" class="card" data-category="diode">
                 <h3>1N4007</h3>
                 <div class="type">Выпрямительный диод</div>
                 <div class="desc">1000V / 1A<br>Корпус: DO-41</div>
+            </a>
+
+            <a href="ss14.html" class="card" data-category="diode">
+                <h3>SS14 / SS34</h3>
+                <div class="type">Диод Шоттки (SMD)</div>
+                <div class="desc">40V / 1A–3A<br>Корпус: SMA / SMB</div>
+            </a>
+
+            <!-- Оптоэлектроника -->
+            <a href="pc817.html" class="card" data-category="opto">
+                <h3>PC817</h3>
+                <div class="type">Оптопара (Оптотрон)</div>
+                <div class="desc">Изоляция: 5000V RMS<br>Корпус: DIP-4 / SOP-4</div>
             </a>
         </div>
     </div>
