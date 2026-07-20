@@ -104,6 +104,7 @@
     <!-- Затемнение заднего фона -->
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
+   
     <!-- Выезжающее меню -->
     <div class="sidebar" id="sidebar">
         <h2>Категории</h2>
@@ -111,13 +112,10 @@
         <div class="menu-item" onclick="selectCategory('transistor', this)">Транзисторы</div>
         <div class="menu-item" onclick="selectCategory('diode', this)">Диоды</div>
         <div class="menu-item" onclick="selectCategory('ic', this)">Микросхемы</div>
-        <div class="menu-item" onclick="selectCategory('resistor', this)">Резисторы</div>
-        <div class="menu-item" onclick="selectCategory('capacitor', this)">Конденсаторы</div>
         <div class="menu-item" onclick="selectCategory('opto', this)">Оптоэлектроника</div>
-        <div class="menu-item" onclick="selectCategory('opto', this)">Оптоэлектроника</div>
-        
-        <!-- ВОТ ЭТУ СТРОЧКУ ДОБАВЬ В КОНЕЦ МЕНЮ: -->
-        <a href="cheatsheet.html" class="menu-item" style="color: #38bdf8; margin-top: 15px; border-top: 1px solid #334155; padding-top: 12px;">📚 Шпаргалки и Полезное</a>
+
+        <!-- Ссылка на шпаргалки -->
+        <a href="cheatsheet.html" class="menu-item" style="color: #38bdf8; margin-top: 15px; border-top: 1px solid #334155; padding-top: 12px; display: block; text-decoration: none;">📚 Шпаргалки и Полезное</a>
     </div>
 
     <div class="container">
