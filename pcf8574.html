@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCF8574 — 8-битный расширитель портов I2C</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0f172a; color: #f8fafc; min-height: 100vh; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 1000px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #38bdf8; text-decoration: none; margin-bottom: 20px; font-weight: 500; }
+        .main-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 25px; margin-bottom: 20px; }
+        .main-card h1 { color: #38bdf8; font-size: 2.2rem; margin-bottom: 6px; }
+        .main-card .subtitle { color: #94a3b8; font-size: 1rem; }
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .spec-box { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 15px; text-align: center; }
+        .spec-box .value { color: #38bdf8; font-size: 1.5rem; font-weight: bold; margin-bottom: 4px; }
+        .spec-box .label { color: #94a3b8; font-size: 0.85rem; }
+        .content-grid { grid-template-columns: 1fr 1fr; display: grid; gap: 20px; margin-bottom: 25px; }
+        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } }
+        .info-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; }
+        .info-card h3 { color: #f8fafc; font-size: 1.1rem; margin-bottom: 10px; }
+        .info-card p, .info-card li { color: #94a3b8; font-size: 0.92rem; line-height: 1.5; }
+        .info-card ul { margin-left: 18px; }
+        .info-card strong { color: #38bdf8; }
+        .warning-box { grid-column: 1 / -1; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; border-radius: 12px; padding: 20px; margin-top: 5px; }
+        .warning-box h4 { color: #ef4444; margin-bottom: 10px; font-size: 1.05rem; }
+        .warning-box ul { margin-left: 20px; font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Назад к поиску</a>
+        <div class="main-card">
+            <h1>PCF8574</h1>
+            <p class="subtitle">8-битный удаленный расширитель ввода-вывода по интерфейсу I2C</p>
+        </div>
+        <div class="specs-grid">
+            <div class="spec-box"><div class="value">I2C (TWI)</div><div class="label">Интерфейс управления</div></div>
+            <div class="spec-box"><div class="value">8 линий</div><div class="label">Порты ввода-вывода (P0-P7)</div></div>
+            <div class="spec-box"><div class="value">2.5V – 5.5V</div><div class="label">Напряжение питания</div></div>
+            <div class="spec-box"><div class="value">DIP-16 / SOIC-16</div><div class="label">Корпус</div></div>
+        </div>
+        <div class="content-grid">
+            <div class="info-card">
+                <h3>Особенности</h3>
+                <p>Позволяет управлять 8 дополнительными дискретными линиями ввода-вывода, используя всего 2 вывода микроконтроллера (SDA и SCL).</p>
+            </div>
+            <div class="info-card">
+                <h3>Применение</h3>
+                <p>Подключение LCD-дисплеев 1602 по I2C переходнику, опрос клавиатур, расширение портов Arduino.</p>
+            </div>
+        </div>
+        <div class="warning-box">
+            <h4>⚠️ Важно при монтаже:</h4>
+            <ul>
+                <li>Выходы микросхемы имеют слабую подтяжку вверх (quasi-bidirectional), поэтому они отлично работают на выдачу сигнала низкого уровня, но слабы на отдачу тока высокого уровня.</li>
+                <li>Адрес микросхемы на шине I2C задается ножками A0, A1, A2 (можно объединить до 8 таких микросхем на одной шине).</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
