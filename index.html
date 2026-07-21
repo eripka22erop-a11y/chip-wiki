@@ -3,681 +3,597 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chip-Wiki — Справочник радиокомпонентов</title>
+    <title>Chip-Wiki — Справочник радиокомпонентов (50 элементов)</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 0; }
-        body { background-color: #0f172a; color: #f8fafc; min-height: 100vh; padding: 20px; display: flex; justify-content: center; }
+        :root {
+            --bg-color: #0b1121;
+            --card-bg: #151e32;
+            --card-hover: #1c2942;
+            --border-color: #243353;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+        }
 
-        .container { width: 100%; max-width: 1000px; margin: 0 auto; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-        /* Шапка */
-        header { text-align: center; margin-bottom: 25px; margin-top: 10px; }
-        h1 { color: #38bdf8; font-size: 2.2rem; margin-bottom: 6px; }
-        .subtitle { color: #94a3b8; font-size: 1rem; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
+            min-height: 100vh;
+        }
 
-        /* Кнопка вызова меню */
-        .menu-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: #38bdf8;
-            font-size: 1.5rem;
-            padding: 8px 14px;
+        header {
+            max-width: 1400px;
+            margin: 0 auto 25px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            cursor: pointer;
-            z-index: 1001;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Выезжающее меню */
+        header h1 {
+            color: var(--accent-blue);
+            font-size: 24px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 20px;
+        }
+
         .sidebar {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 280px;
-            height: 100%;
-            background: #1e293b;
-            border-left: 1px solid #334155;
-            padding: 60px 20px 20px;
-            z-index: 1000;
-            transition: right 0.3s ease;
-            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
-            overflow-y: auto;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
         }
-        .sidebar.active { right: 0; }
 
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.7);
-            display: none;
-            z-index: 999;
+        .sidebar h3 {
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
         }
-        .overlay.active { display: block; }
 
-        .menu-item {
-            display: block;
-            color: #cbd5e1;
-            text-decoration: none;
-            padding: 10px 12px;
-            border-radius: 6px;
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
             margin-bottom: 6px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: background 0.2s;
         }
-        .menu-item:hover, .menu-item.active { background: #334155; color: #38bdf8; }
 
-        /* Поиск и Тэги */
-        .search-box {
-            width: 100%;
-            padding: 14px 18px;
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 10px;
-            color: #f8fafc;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .search-box:focus { border-color: #38bdf8; }
-
-        .tags-container { display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap; justify-content: center; }
-        .tag-btn {
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: #94a3b8;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.88rem;
+        .sidebar a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 13px;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 6px;
             transition: all 0.2s ease;
         }
-        .tag-btn:hover, .tag-btn.active {
-            background: #38bdf8;
-            color: #0f172a;
-            border-color: #38bdf8;
-            font-weight: 600;
+
+        .sidebar a:hover {
+            background-color: var(--card-hover);
+            color: var(--accent-blue);
         }
 
-        /* Сетка карточек */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
         }
 
-        .card {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 20px;
+        .component-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
             text-decoration: none;
-            color: inherit;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: #38bdf8;
-            box-shadow: 0 10px 20px -5px rgba(56, 189, 248, 0.15);
-        }
-        .card h3 { color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px; }
-        .card .type { color: #38bdf8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
-        .card .desc { color: #94a3b8; font-size: 0.9rem; line-height: 1.4; }
-
-        /* Кнопка смены темы */
-        .theme-btn {
-            position: fixed;
-            top: 20px;
-            right: 70px;
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: #38bdf8;
-            font-size: 1.2rem;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 1001;
+            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
         }
 
-        /* Светлая тема */
-        body.light-mode { background-color: #f1f5f9; color: #0f172a; }
-
-        body.light-mode .card, 
-        body.light-mode .sidebar, 
-        body.light-mode header, 
-        body.light-mode .search-box { 
-            background: #ffffff; 
-            border-color: #cbd5e1; 
-            color: #0f172a; 
+        .component-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+            background-color: var(--card-hover);
         }
 
-        body.light-mode .menu-item { color: #334155; }
-        body.light-mode .menu-item:hover { background: #f1f5f9; color: #0f172a; }
-        body.light-mode .card h3 { color: #0f172a; }
-        body.light-mode .card .desc { color: #475569; }
-
-        body.light-mode .tag-btn { background: #ffffff; border-color: #cbd5e1; color: #475569; }
-        body.light-mode .tag-btn.active { background: #38bdf8; color: #ffffff; border-color: #38bdf8; }
-
-        body.light-mode .menu-btn, 
-        body.light-mode .theme-btn { 
-            background: #ffffff; 
-            border-color: #cbd5e1; 
-            color: #38bdf8; 
+        .component-title {
+            color: var(--accent-blue);
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 6px;
         }
-        body.light-mode .menu-item.active { 
-            background: #e2e8f0; 
-            color: #0284c7; 
+
+        .component-desc {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .tag {
+            align-self: flex-start;
+            margin-top: 12px;
+            font-size: 10px;
+            padding: 2px 6px;
+            background-color: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Кнопки управления -->
-    <button class="theme-btn" onclick="toggleTheme()">🌓</button>
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
-
-    <!-- Затемнение фона при открытом меню -->
-    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-    <!-- Выезжающее боковое меню -->
-    <div class="sidebar" id="sidebar">
-        <h2 style="color: #94a3b8; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 10px; padding-left: 10px;">Категории</h2>
-        <div class="menu-item active" onclick="selectCategory('all', this)">Все компоненты</div>
-        <div class="menu-item" onclick="selectCategory('transistor', this)">Транзисторы</div>
-        <div class="menu-item" onclick="selectCategory('diode', this)">Диоды</div>
-        <div class="menu-item" onclick="selectCategory('ic', this)">Микросхемы</div>
-        <div class="menu-item" onclick="selectCategory('opto', this)">Опто / Датчики</div>
-        <div class="menu-item" onclick="selectCategory('power', this)">Питание / Преобразователи</div>
-        <div class="menu-item" onclick="selectCategory('module', this)">Модули / Связь</div>
-
-        <div style="border-top: 1px solid #334155; margin-top: 15px; padding-top: 15px;">
-            <a href="cheatsheet.html" class="menu-item" style="color: #38bdf8;">🎭 Шпаргалки и Полезное</a>
-            <a href="calc.html" class="menu-item" style="color: #22c55e;">🧮 Калькуляторы</a>
-            <a href="schemes.html" class="menu-item" style="color: #eab308;">⚡ Готовые схемы</a>
-        </div>
-    </div>
-
-    <div class="container">
-        <header>
+    <header>
+        <div>
             <h1>Chip-Wiki</h1>
-            <p class="subtitle">Быстрый справочник цоколевок, характеристик и аналогов</p>
-        </header>
-
-        <input type="text" id="searchInput" onkeyup="filterComponents()" class="search-box" placeholder="Поиск детали (например: IRFZ44N, NE5532, ESP8266)...">
-
-        <!-- Теги-фильтры -->
-        <div class="tags-container">
-            <button onclick="selectCategory('all', this)" class="tag-btn active">Все</button>
-            <button onclick="selectCategory('transistor', this)" class="tag-btn">Транзисторы</button>
-            <button onclick="selectCategory('ic', this)" class="tag-btn">Микросхемы</button>
-            <button onclick="selectCategory('diode', this)" class="tag-btn">Диоды</button>
-            <button onclick="selectCategory('opto', this)" class="tag-btn">Опто/Датчики</button>
-            <button onclick="selectCategory('power', this)" class="tag-btn">Питание</button>
-            <button onclick="selectCategory('module', this)" class="tag-btn">Модули</button>
+            <p>База знаний по радиокомпонентам (50 элементов)</p>
         </div>
+    </header>
 
-        <!-- Сетка карточек -->
-        <div class="grid" id="cardsGrid">
+    <div class="layout">
+        <nav class="sidebar">
+            <h3>Категории</h3>
+            <ul>
+                <li><a href="#transistors">Транзисторы и Симисторы</a></li>
+                <li><a href="#power">Питание и DC-DC</a></li>
+                <li><a href="#sensors">Датчики</a></li>
+                <li><a href="#drivers">Драйверы и Моторы</a></li>
+                <li><a href="#mcu">Микроконтроллеры</a></li>
+                <li><a href="#logic">Логика и ИС</a></li>
+                <li><a href="#interface">Интерфейсы и Связь</a></li>
+                <li><a href="#opto">Оптопары и Реле</a></li>
+            </ul>
+        </nav>
 
-            <!-- Исходные компоненты -->
-            <a href="irf3205.html" class="card" data-category="transistor">
-                <h3>IRF3205</h3>
-                <div class="type">Полевой транзистор (N-Ch)</div>
-                <div class="desc">55V / 110A / TO-220<br>Сопротивление: 8 мОм</div>
-            </a>
-            
-            <a href="lm7805.html" class="card" data-category="power">
-                <h3>LM7805</h3>
-                <div class="type">Стабилизатор напряжения</div>
-                <div class="desc">Стабилизатор напряжения 5В (TO-220)</div>
-            </a>
-            <div class="components-grid">
-    <a href="ne5532.html" class="component-card">
-        <h3>NE5532</h3>
-        <p>Аудио операционный усилитель</p>
-    </a>
-    <a href="mcp2515.html" class="component-card">
-        <h3>MCP2515</h3>
-        <p>Контроллер шины CAN</p>
-    </a>
-    <a href="l298n.html" class="component-card">
-        <h3>L298N</h3>
-        <p>Драйвер моторов</p>
-    </a>
-    <a href="ds18b20.html" class="component-card">
-        <h3>DS18B20</h3>
-        <p>Цифровой датчик температуры</p>
-    </a>
-    <a href="dht11.html" class="component-card">
-        <h3>DHT11</h3>
-        <p>Датчик температуры и влажности</p>
-    </a>
-    <a href="dht22.html" class="component-card">
-        <h3>DHT22 (AM2302)</h3>
-        <p>Датчик температуры и влажности</p>
-    </a>
-    <a href="pcf8574.html" class="component-card">
-        <h3>PCF8574</h3>
-        <p>Расширитель портов ввода-вывода</p>
-    </a>
-    <a href="max7219.html" class="component-card">
-        <h3>MAX7219</h3>
-        <p>Драйвер LED матриц</p>
-    </a>
-    <a href="ams1117-3.3.html" class="component-card">
-        <h3>AMS1117-3.3</h3>
-        <p>Линейный стабилизатор напряжения</p>
-    </a>
-    <a href="tl071.html" class="component-card">
-        <h3>TL071</h3>
-        <p>Одиночный операционный усилитель</p>
-    </a>
-    <a href="ir2104.html" class="component-card">
-        <h3>IR2104</h3>
-        <p>Драйвер полумоста MOSFET/IGBT</p>
-    </a>
-    <a href="bta16.html" class="component-card">
-        <h3>BTA16-600B</h3>
-        <p>Мощный симистор</p>
-    </a>
-    <a href="cd4017.html" class="component-card">
-        <h3>CD4017</h3>
-        <p>Декадный счетчик / делитель</p>
-    </a>
-    <a href="cd4001.html" class="component-card">
-        <h3>CD4001</h3>
-        <p>Логические элементы 2И-НЕ</p>
-    </a>
-    <a href="sn74hc595.html" class="component-card">
-        <h3>SN74HC595N</h3>
-        <p>Сдвиговый регистр</p>
-    </a>
-    <a href="tp4056.html" class="component-card">
-        <h3>TP4056</h3>
-        <p>Контроллер заряда Li-ion</p>
-    </a>
-    <a href="xl4015.html" class="component-card">
-        <h3>XL4015</h3>
-        <p>Понижающий DC-DC преобразователь</p>
-    </a>
-    <a href="mt3608.html" class="component-card">
-        <h3>MT3608</h3>
-        <p>Повышающий DC-DC преобразователь</p>
-    </a>
-    <a href="esp8266.html" class="component-card">
-        <h3>ESP8266 (NodeMCU)</h3>
-        <p>Wi-Fi микроконтроллер</p>
-    </a>
-    <a href="atmega328p.html" class="component-card">
-        <h3>ATmega328P</h3>
-        <p>Микроконтроллер AVR</p>
-    </a>
-    <a href="bmp280.html" class="component-card">
-        <h3>BMP280</h3>
-        <p>Датчик давления и температуры</p>
-    </a>
-    <a href="mpu6050.html" class="component-card">
-        <h3>MPU6050</h3>
-        <p>Акселерометр и гироскоп</p>
-    </a>
-    <a href="ds3231.html" class="component-card">
-        <h3>RTC DS3231</h3>
-        <p>Модуль реального времени</p>
-    </a>
-    <a href="1n5819.html" class="component-card">
-        <h3>1N5819</h3>
-        <p>Диод Шоттки</p>
-    </a>
-    <a href="bat85.html" class="component-card">
-        <h3>BAT85</h3>
-        <p>Маломощный диод Шоттки</p>
-    </a>
-</div>
+        <main class="grid">
 
-            <a href="irfz44n.html" class="card" data-category="transistor">
-                <h3>IRFZ44N</h3>
-                <div class="type">Мощный N-Channel MOSFET</div>
-                <div class="desc">55V / 49A / TO-220<br>Ключи, ШИМ, управление моторами</div>
+            <!-- Транзисторы и Симисторы -->
+            <a href="irf3205.html" class="component-card" id="transistors">
+                <div>
+                    <div class="component-title">IRF3205</div>
+                    <div class="component-desc">Мощный N-канальный MOSFET (55V, 110A)</div>
+                </div>
+                <span class="tag">Транзистор</span>
             </a>
 
-            <a href="bt136.html" class="card" data-category="transistor">
-                <h3>BT136-600E</h3>
-                <div class="type">Симистор (TRIAC)</div>
-                <div class="desc">600V / 4A / TO-220AB<br>Управление нагрузкой 220V AC</div>
+            <a href="irfz44n.html" class="component-card">
+                <div>
+                    <div class="component-title">IRFZ44N</div>
+                    <div class="component-desc">N-канальный полевой транзистор (55V, 49A)</div>
+                </div>
+                <span class="tag">Транзистор</span>
             </a>
 
-            <a href="kt315.html" class="card" data-category="transistor">
-                <h3>КТ315</h3>
-                <div class="type">Биполярный NPN</div>
-                <div class="desc">15V – 60V / 0.1A / КТ-13<br>Классический советский транзистор</div>
+            <a href="irf540n.html" class="component-card">
+                <div>
+                    <div class="component-title">IRF540N</div>
+                    <div class="component-desc">N-канальный MOSFET (100V, 33A)</div>
+                </div>
+                <span class="tag">Транзистор</span>
             </a>
 
-            <a href="kt361.html" class="card" data-category="transistor">
-                <h3>КТ361</h3>
-                <div class="type">Биполярный PNP</div>
-                <div class="desc">35V / 0.05A / КТ-13<br>Комплементарная пара для КТ315</div>
-            </a>
-            
-            <a href="irf840.html" class="card" data-category="transistor">
-                <h3>IRF840</h3>
-                <div class="type">Высоковольтный MOSFET</div>
-                <div class="desc">Высоковольтный MOSFET 500В 8А (TO-220)</div>
+            <a href="irlz44n.html" class="component-card">
+                <div>
+                    <div class="component-title">IRLZ44N</div>
+                    <div class="component-desc">Logic-Level N-канальный MOSFET (55V, 47A)</div>
+                </div>
+                <span class="tag">Транзистор</span>
             </a>
 
-            <a href="kt819.html" class="card" data-category="transistor">
-                <h3>КТ819</h3>
-                <div class="type">Мощный NPN</div>
-                <div class="desc">40V – 100V / 10A / TO-220 / ТО-3<br>Усилители НЧ, блоки питания</div>
+            <a href="2n2222.html" class="component-card">
+                <div>
+                    <div class="component-title">2N2222 (PN2222)</div>
+                    <div class="component-desc">Маломощный биполярный NPN транзистор</div>
+                </div>
+                <span class="tag">Транзистор</span>
             </a>
 
-            <a href="2n2222.html" class="card" data-category="transistor">
-                <h3>2N2222 (KN2222)</h3>
-                <div class="type">Маломощный NPN</div>
-                <div class="desc">40V / 0.8A / TO-92<br>Универсальный ключ и усилитель</div>
-            </a>
-            
-            <a href="lm358.html" class="card" data-category="ic">
-                <h3>LM358</h3>
-                <div class="type">Операционный усилитель</div>
-                <div class="desc">Двухканальный операционный усилитель (DIP-8)</div>
-            </a>
-            
-            <a href="lm7905.html" class="card" data-category="power">
-                <h3>LM7905</h3>
-                <div class="type">Стабилизатор напряжения</div>
-                <div class="desc">Стабилизатор отрицательного напряжения -5В (TO-220)</div>
+            <a href="bc547.html" class="component-card">
+                <div>
+                    <div class="component-title">BC547</div>
+                    <div class="component-desc">Универсальный биполярный NPN транзистор</div>
+                </div>
+                <span class="tag">Транзистор</span>
             </a>
 
-            <a href="ws2812b.html" class="card" data-category="opto">
-                <h3>WS2812B</h3>
-                <div class="type">Адресный RGB светодиод</div>
-                <div class="desc">5V / 800 кГц / 5050<br>Управление по одному проводу (Data)</div>
+            <a href="bc557.html" class="component-card">
+                <div>
+                    <div class="component-title">BC557</div>
+                    <div class="component-desc">Универсальный биполярный PNP транзистор</div>
+                </div>
+                <span class="tag">Транзистор</span>
             </a>
 
-            <a href="hc-sr04.html" class="card" data-category="opto">
-                <h3>HC-SR04</h3>
-                <div class="type">Ультразвуковой дальномер</div>
-                <div class="desc">5V / 2cm – 400cm / 40kHz<br>Измерение расстояния (Trig/Echo)</div>
+            <a href="tip122.html" class="component-card">
+                <div>
+                    <div class="component-title">TIP122</div>
+                    <div class="component-desc">Составной транзистор Дарлингтона (NPN, 100V, 5A)</div>
+                </div>
+                <span class="tag">Транзистор</span>
             </a>
 
-            <a href="pc817.html" class="card" data-category="opto">
-                <h3>PC817</h3>
-                <div class="type">Оптопара (Optocoupler)</div>
-                <div class="desc">5000V RMS / DIP-4<br>Гальваническая развязка цепей</div>
+            <a href="bta16-600b.html" class="component-card">
+                <div>
+                    <div class="component-title">BTA16-600B</div>
+                    <div class="component-desc">Мощный симметричный триодный тиристор (симистор)</div>
+                </div>
+                <span class="tag">Симистор</span>
             </a>
 
-            <a href="ne555.html" class="card" data-category="ic">
-                <h3>NE555</h3>
-                <div class="type">Аналоговый таймер</div>
-                <div class="desc">4.5V – 16V / DIP-8<br>Генератор импульсов, ШИМ</div>
+            <!-- Питание и DC-DC -->
+            <a href="ams1117.html" class="component-card" id="power">
+                <div>
+                    <div class="component-title">AMS1117-3.3 / 5.0</div>
+                    <div class="component-desc">Линейный стабилизатор напряжения LDO</div>
+                </div>
+                <span class="tag">Питание</span>
             </a>
 
-            <a href="lm317.html" class="card" data-category="ic">
-                <h3>LM317</h3>
-                <div class="type">Регулируемый стабилизатор</div>
-                <div class="desc">1.25V – 37V / 1.5A / TO-220<br>Линейный регулятор напряжения</div>
+            <a href="l7805.html" class="component-card">
+                <div>
+                    <div class="component-title">L7805CV</div>
+                    <div class="component-desc">Линейный стабилизатор +5V (1.5A)</div>
+                </div>
+                <span class="tag">Питание</span>
             </a>
 
-            <a href="ams1117.html" class="card" data-category="ic">
-                <h3>AMS1117</h3>
-                <div class="type">LDO Стабилизатор</div>
-                <div class="desc">3.3V / 5.0V / 1A / SOT-223<br>Питание для ESP8266/ESP32/МК</div>
+            <a href="lm317.html" class="component-card">
+                <div>
+                    <div class="component-title">LM317</div>
+                    <div class="component-desc">Регулируемый линейный стабилизатор напряжения</div>
+                </div>
+                <span class="tag">Питание</span>
             </a>
 
-            <a href="tl431.html" class="card" data-category="ic">
-                <h3>TL431</h3>
-                <div class="type">Регулируемый стабилитрон</div>
-                <div class="desc">2.5V – 36V / TO-92<br>Точный источник опорного напряжения</div>
+            <a href="tp4056.html" class="component-card">
+                <div>
+                    <div class="component-title">TP4056</div>
+                    <div class="component-desc">Контроллер заряда Li-ion аккумуляторов (1A)</div>
+                </div>
+                <span class="tag">Питание</span>
             </a>
 
-            <a href="tl494.html" class="card" data-category="ic">
-                <h3>TL494</h3>
-                <div class="type">ШИМ-контроллер</div>
-                <div class="desc">40V / 200mA / DIP-16<br>Сердце БП ПК и инверторов</div>
+            <a href="xl4015.html" class="component-card">
+                <div>
+                    <div class="component-title">XL4015</div>
+                    <div class="component-desc">Понижающий DC-DC преобразователь (5A)</div>
+                </div>
+                <span class="tag">Питание</span>
             </a>
 
-            <a href="tl072.html" class="card" data-category="ic">
-                <h3>TL072</h3>
-                <div class="type">Двойной ОУ (JFET)</div>
-                <div class="desc">±18V / DIP-8<br>Малошумящий операционный усилитель</div>
+            <a href="mt3608.html" class="component-card">
+                <div>
+                    <div class="component-title">MT3608</div>
+                    <div class="component-desc">Компактный повышающий DC-DC преобразователь (2A)</div>
+                </div>
+                <span class="tag">Питание</span>
             </a>
 
-            <a href="arduino-nano.html" class="card" data-category="module">
-                <h3>Arduino Nano</h3>
-                <div class="type">Плата микроконтроллера</div>
-                <div class="desc">ATmega328P / 5V / CH340 / Type-C<br>Компактная плата для проектов</div>
+            <a href="lm2596.html" class="component-card">
+                <div>
+                    <div class="component-title">LM2596</div>
+                    <div class="component-desc">Импульсный понижающий регулятор напряжения (3A)</div>
+                </div>
+                <span class="tag">Питание</span>
             </a>
 
-            <a href="arduino-uno.html" class="card" data-category="module">
-                <h3>Arduino Uno R3</h3>
-                <div class="type">Плата микроконтроллера</div>
-                <div class="desc">ATmega328P / 5V / DIP-28<br>Классическая отладочная плата</div>
+            <a href="tl431.html" class="component-card">
+                <div>
+                    <div class="component-title">TL431</div>
+                    <div class="component-desc">Регулируемый прецизионный параллельный стабилитрон</div>
+                </div>
+                <span class="tag">Питание</span>
             </a>
 
-            <a href="1n4007.html" class="card" data-category="diode">
-                <h3>1N4007</h3>
-                <div class="type">Выпрямительный диод</div>
-                <div class="desc">1000V / 1A / DO-41<br>Базовый выпрямительный диод</div>
+            <!-- Датчики -->
+            <a href="ds18b20.html" class="component-card" id="sensors">
+                <div>
+                    <div class="component-title">DS18B20</div>
+                    <div class="component-desc">Цифровой термометр с шиной 1-Wire</div>
+                </div>
+                <span class="tag">Датчик</span>
             </a>
 
-            <a href="ss14.html" class="card" data-category="diode">
-                <h3>SS14</h3>
-                <div class="type">Диод Шоттки (SMD)</div>
-                <div class="desc">40V / 1A / SMA (DO-214AC)<br>Низкое падение напряжения</div>
+            <a href="dht11.html" class="component-card">
+                <div>
+                    <div class="component-title">DHT11</div>
+                    <div class="component-desc">Датчик температуры и влажности</div>
+                </div>
+                <span class="tag">Датчик</span>
             </a>
 
-            <!-- Новые 25 радиодеталей -->
-            <a href="ne5532.html" class="card" data-category="ic">
-                <h3>NE5532</h3>
-                <div class="type">Микросхема / Аудио</div>
-                <div class="desc">Высококачественный малошумящий операционный усилитель для аудио-схем.</div>
+            <a href="dht22.html" class="component-card">
+                <div>
+                    <div class="component-title">DHT22 (AM2302)</div>
+                    <div class="component-desc">Высокоточный датчик температуры и влажности</div>
+                </div>
+                <span class="tag">Датчик</span>
             </a>
 
-            <a href="mcp2515.html" class="card" data-category="module">
-                <h3>MCP2515</h3>
-                <div class="type">Модуль / Связь</div>
-                <div class="desc">Контроллер шины CAN для автомобильной электроники и связи микроконтроллеров.</div>
+            <a href="bmp280.html" class="component-card">
+                <div>
+                    <div class="component-title">BMP280 / BME280</div>
+                    <div class="component-desc">Датчик атмосферного давления и температуры</div>
+                </div>
+                <span class="tag">Датчик</span>
             </a>
 
-            <a href="l298n.html" class="card" data-category="module">
-                <h3>L298N</h3>
-                <div class="type">Силовая электроника</div>
-                <div class="desc">Двухканальный драйвер мощных коллекторных и шаговых двигателей.</div>
+            <a href="mpu6050.html" class="component-card">
+                <div>
+                    <div class="component-title">MPU-6050</div>
+                    <div class="component-desc">6-осевой гироскоп и акселерометр</div>
+                </div>
+                <span class="tag">Датчик</span>
             </a>
 
-            <a href="ds18b20.html" class="card" data-category="opto">
-                <h3>DS18B20</h3>
-                <div class="type">Датчик</div>
-                <div class="desc">Цифровой датчик температуры с интерфейсом 1-Wire в герметичном исполнении.</div>
+            <a href="hc-sr04.html" class="component-card">
+                <div>
+                    <div class="component-title">HC-SR04</div>
+                    <div class="component-desc">Ультразвуковой датчик измерения расстояния</div>
+                </div>
+                <span class="tag">Датчик</span>
             </a>
 
-            <a href="dht11.html" class="card" data-category="opto">
-                <h3>DHT11</h3>
-                <div class="type">Датчик</div>
-                <div class="desc">Простой цифровой датчик температуры и влажности воздуха.</div>
+            <a href="mq2.html" class="component-card">
+                <div>
+                    <div class="component-title">MQ-2</div>
+                    <div class="component-desc">Аналоговый датчик горючих газов и дыма</div>
+                </div>
+                <span class="tag">Датчик</span>
             </a>
 
-            <a href="dht22.html" class="card" data-category="opto">
-                <h3>DHT22 (AM2302)</h3>
-                <div class="type">Датчик</div>
-                <div class="desc">Более точный цифровой датчик температуры и влажности воздуха.</div>
+            <!-- Драйверы и моторы -->
+            <a href="l298n.html" class="component-card" id="drivers">
+                <div>
+                    <div class="component-title">L298N</div>
+                    <div class="component-desc">Двойной H-мост для управления моторами</div>
+                </div>
+                <span class="tag">Драйвер</span>
             </a>
 
-            <a href="pcf8574.html" class="card" data-category="ic">
-                <h3>PCF8574</h3>
-                <div class="type">Микросхема / Логика</div>
-                <div class="desc">8-битный расширитель портов ввода-вывода по интерфейсу I2C.</div>
+            <a href="l293d.html" class="component-card">
+                <div>
+                    <div class="component-title">L293D</div>
+                    <div class="component-desc">Микросхема драйвера моторов (H-Bridge)</div>
+                </div>
+                <span class="tag">Драйвер</span>
             </a>
 
-            <a href="max7219.html" class="card" data-category="ic">
-                <h3>MAX7219</h3>
-                <div class="type">Микросхема / Дисплей</div>
-                <div class="desc">Драйвер для управления матричными светодиодными дисплеями и семисегментниками.</div>
+            <a href="a4988.html" class="component-card">
+                <div>
+                    <div class="component-title">A4988</div>
+                    <div class="component-desc">Драйвер шагового двигателя с микрошагом</div>
+                </div>
+                <span class="tag">Драйвер</span>
             </a>
 
-            <a href="ams1117-3.3.html" class="card" data-category="power">
-                <h3>AMS1117-3.3</h3>
-                <div class="type">Питание</div>
-                <div class="desc">Фиксированный линейный стабилизатор напряжения на 3.3В для питания ESP/модулей.</div>
+            <a href="uln2003.html" class="component-card">
+                <div>
+                    <div class="component-title">ULN2003</div>
+                    <div class="component-desc">Массив ключей Дарлингтона для реле и шаговиков</div>
+                </div>
+                <span class="tag">Драйвер</span>
             </a>
 
-            <a href="tl071.html" class="card" data-category="ic">
-                <h3>TL071</h3>
-                <div class="type">Микросхема / ОУ</div>
-                <div class="desc">Одиночный операционный усилитель с полевыми транзисторами на входе.</div>
+            <a href="ir2104.html" class="component-card">
+                <div>
+                    <div class="component-title">IR2104</div>
+                    <div class="component-desc">Драйвер верхнего и нижнего ключей MOSFET/IGBT</div>
+                </div>
+                <span class="tag">Драйвер</span>
             </a>
 
-            <a href="ir2104.html" class="card" data-category="transistor">
-                <h3>IR2104</h3>
-                <div class="type">Драйвер / Силовая</div>
-                <div class="desc">Драйвер верхнего и нижнего ключа MOSFET/IGBT с полумостовым выходом.</div>
+            <a href="ir2110.html" class="component-card">
+                <div>
+                    <div class="component-title">IR2110</div>
+                    <div class="component-desc">Высоковольтный высокоскоростной драйвер ключей</div>
+                </div>
+                <span class="tag">Драйвер</span>
             </a>
 
-            <a href="bta16.html" class="card" data-category="transistor">
-                <h3>BTA16-600B</h3>
-                <div class="type">Симистор / 220В</div>
-                <div class="desc">Мощный симистор в корпусе TO-220 для коммутации нагрузки 220В.</div>
+            <!-- Микроконтроллеры -->
+            <a href="esp8266.html" class="component-card" id="mcu">
+                <div>
+                    <div class="component-title">ESP8266 (NodeMCU)</div>
+                    <div class="component-desc">Wi-Fi микроконтроллер 80MHz</div>
+                </div>
+                <span class="tag">Микроконтроллер</span>
             </a>
 
-            <a href="cd4017.html" class="card" data-category="ic">
-                <h3>CD4017</h3>
-                <div class="type">КМОП Логика</div>
-                <div class="desc">Декадный счетчик / делитель частоты с дешифратором (для бегущих огней).</div>
+            <a href="esp32.html" class="component-card">
+                <div>
+                    <div class="component-title">ESP32</div>
+                    <div class="component-desc">Двухъядерный SoC с Wi-Fi и Bluetooth</div>
+                </div>
+                <span class="tag">Микроконтроллер</span>
             </a>
 
-            <a href="cd4001.html" class="card" data-category="ic">
-                <h3>CD4001</h3>
-                <div class="type">КМОП Логика</div>
-                <div class="desc">Логический элемент 4x 2И-НЕ на полевых транзисторах (серия КМОП).</div>
+            <a href="atmega328p.html" class="component-card">
+                <div>
+                    <div class="component-title">ATmega328P</div>
+                    <div class="component-desc">8-битный AVR микроконтроллер (Arduino Uno/Nano)</div>
+                </div>
+                <span class="tag">Микроконтроллер</span>
             </a>
 
-            <a href="sn74hc595.html" class="card" data-category="ic">
-                <h3>SN74HC595N</h3>
-                <div class="type">Логика</div>
-                <div class="desc">8-битный сдвиговый регистр с защелкой для экономии пинов микроконтроллера.</div>
+            <a href="attiny85.html" class="component-card">
+                <div>
+                    <div class="component-title">ATtiny85</div>
+                    <div class="component-desc">Компактный 8-выводный AVR микроконтроллер</div>
+                </div>
+                <span class="tag">Микроконтроллер</span>
             </a>
 
-            <a href="tp4056.html" class="card" data-category="power">
-                <h3>TP4056</h3>
-                <div class="type">Питание / Зарядка</div>
-                <div class="desc">Контроллер заряда литиевых аккумуляторов (Li-ion) с защитой или без.</div>
+            <a href="stm32f103c8t6.html" class="component-card">
+                <div>
+                    <div class="component-title">STM32F103C8T6 (Blue Pill)</div>
+                    <div class="component-desc">32-битный микроконтроллер ARM Cortex-M3</div>
+                </div>
+                <span class="tag">Микроконтроллер</span>
             </a>
 
-            <a href="xl4015.html" class="card" data-category="power">
-                <h3>XL4015</h3>
-                <div class="type">Преобразователь</div>
-                <div class="desc">Понижающий DC-DC преобразователь с регулировкой тока и напряжения.</div>
+            <a href="rp2040.html" class="component-card">
+                <div>
+                    <div class="component-title">Raspberry Pi RP2040</div>
+                    <div class="component-desc">Двухъядерный Cortex-M0+ с PIO</div>
+                </div>
+                <span class="tag">Микроконтроллер</span>
             </a>
 
-            <a href="mt3608.html" class="card" data-category="power">
-                <h3>MT3608</h3>
-                <div class="type">Преобразователь</div>
-                <div class="desc">Миниатюрный повышающий DC-DC преобразователь напряжения.</div>
+            <!-- Логика и Аналоговые ИС -->
+            <a href="ne555.html" class="component-card" id="logic">
+                <div>
+                    <div class="component-title">NE555 (LM555)</div>
+                    <div class="component-desc">Универсальный таймер / генератор импульсов</div>
+                </div>
+                <span class="tag">Таймер</span>
             </a>
 
-            <a href="esp8266.html" class="card" data-category="module">
-                <h3>ESP8266 (NodeMCU)</h3>
-                <div class="type">Модуль / Wi-Fi</div>
-                <div class="desc">Популярный модуль Wi-Fi для проектов Интернета вещей (IoT).</div>
+            <a href="lm358.html" class="component-card">
+                <div>
+                    <div class="component-title">LM358</div>
+                    <div class="component-desc">Двухканальный операционный усилитель</div>
+                </div>
+                <span class="tag">ОУ</span>
             </a>
 
-            <a href="atmega328p.html" class="card" data-category="ic">
-                <h3>ATmega328P</h3>
-                <div class="type">Микроконтроллер</div>
-                <div class="desc">Микроконтроллер («сердце» Arduino Uno/Nano) в корпусе DIP-28.</div>
+            <a href="tl071.html" class="component-card">
+                <div>
+                    <div class="component-title">TL071 / TL072</div>
+                    <div class="component-desc">Малошумящий операционный усилитель с JFET входом</div>
+                </div>
+                <span class="tag">ОУ</span>
             </a>
 
-            <a href="bmp280.html" class="card" data-category="opto">
-                <h3>BMP280</h3>
-                <div class="type">Датчик</div>
-                <div class="desc">Цифровой датчик атмосферного давления, температуры и высоты.</div>
+            <a href="sn74hc595n.html" class="component-card">
+                <div>
+                    <div class="component-title">SN74HC595N</div>
+                    <div class="component-desc">8-битный сдвиговый регистр с защелкой</div>
+                </div>
+                <span class="tag">Логика</span>
             </a>
 
-            <a href="mpu6050.html" class="card" data-category="opto">
-                <h3>MPU6050</h3>
-                <div class="type">Датчик</div>
-                <div class="desc">6-осевой гироскоп и акселерометр для отслеживания положения в пространстве.</div>
+            <a href="cd4017.html" class="component-card">
+                <div>
+                    <div class="component-title">CD4017</div>
+                    <div class="component-desc">Декадный счетчик-делитель</div>
+                </div>
+                <span class="tag">Логика</span>
             </a>
 
-            <a href="ds3231.html" class="card" data-category="module">
-                <h3>RTC DS3231</h3>
-                <div class="type">Модуль / Время</div>
-                <div class="desc">Высокоточный модуль реального времени с термокомпенсацией.</div>
+            <a href="cd4001.html" class="component-card">
+                <div>
+                    <div class="component-title">CD4001</div>
+                    <div class="component-desc">Четыре логических элемента 2ИЛИ-НЕ</div>
+                </div>
+                <span class="tag">Логика</span>
             </a>
 
-            <a href="1n5819.html" class="card" data-category="diode">
-                <h3>1N5819</h3>
-                <div class="type">Диод</div>
-                <div class="desc">Популярный диод Шоттки средней мощности (1А, 40В).</div>
+            <a href="max7219.html" class="component-card">
+                <div>
+                    <div class="component-title">MAX7219</div>
+                    <div class="component-desc">Драйвер светодиодных матриц и 7-сегментников</div>
+                </div>
+                <span class="tag">Индикация</span>
             </a>
 
-            <a href="bat85.html" class="card" data-category="diode">
-                <h3>BAT85</h3>
-                <div class="type">Диод</div>
-                <div class="desc">Маломощный быстродействующий диод Шоттки в стеклянном корпусе.</div>
+            <!-- Интерфейсы и Расширители -->
+            <a href="pcf8574.html" class="component-card" id="interface">
+                <div>
+                    <div class="component-title">PCF8574</div>
+                    <div class="component-desc">8-битный расширитель портов I2C (для LCD 1602)</div>
+                </div>
+                <span class="tag">Интерфейс</span>
             </a>
 
-        </div>
+            <a href="mcp2515.html" class="component-card">
+                <div>
+                    <div class="component-title">MCP2515</div>
+                    <div class="component-desc">Автономный контроллер шины CAN с SPI</div>
+                </div>
+                <span class="tag">Интерфейс</span>
+            </a>
+
+            <a href="max485.html" class="component-card">
+                <div>
+                    <div class="component-title">MAX485</div>
+                    <div class="component-desc">Приемопередатчик интерфейса RS-485 / Modbus</div>
+                </div>
+                <span class="tag">Интерфейс</span>
+            </a>
+
+            <a href="ch340g.html" class="component-card">
+                <div>
+                    <div class="component-title">CH340G</div>
+                    <div class="component-desc">Преобразователь интерфейсов USB в UART</div>
+                </div>
+                <span class="tag">Интерфейс</span>
+            </a>
+
+            <!-- Оптопара и Развязка -->
+            <a href="pc817.html" class="component-card" id="opto">
+                <div>
+                    <div class="component-title">PC817</div>
+                    <div class="component-desc">Одноканальная транзисторная оптопара</div>
+                </div>
+                <span class="tag">Оптопара</span>
+            </a>
+
+            <a href="moc3041.html" class="component-card">
+                <div>
+                    <div class="component-title">MOC3041 / MOC3021</div>
+                    <div class="component-desc">Симисторная оптопара с детектором нуля</div>
+                </div>
+                <span class="tag">Оптопара</span>
+            </a>
+
+            <a href="relay-module.html" class="component-card">
+                <div>
+                    <div class="component-title">Модуль Реле 5V</div>
+                    <div class="component-desc">Электромеханическое реле с опторазвязкой</div>
+                </div>
+                <span class="tag">Реле</span>
+            </a>
+
+        </main>
     </div>
 
-    <script>
-        let currentCategory = 'all';
-
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('overlay').classList.toggle('active');
-        }
-
-        function selectCategory(category, element) {
-            currentCategory = category;
-
-            // Синхронизируем активность кнопок тегов и меню
-            document.querySelectorAll('.tag-btn, .menu-item').forEach(el => {
-                if (el.getAttribute('onclick') && el.getAttribute('onclick').includes(`'${category}'`)) {
-                    el.classList.add('active');
-                } else {
-                    el.classList.remove('active');
-                }
-            });
-
-            // Закрываем меню, если кликнули из боковой панели
-            document.getElementById('sidebar').classList.remove('active');
-            document.getElementById('overlay').classList.remove('active');
-
-            filterComponents();
-        }
-
-        function filterComponents() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('card');
-
-            for (let i = 0; i < cards.length; i++) {
-                let card = cards[i];
-                let text = card.innerText.toLowerCase();
-                let category = card.getAttribute('data-category');
-
-                let matchesSearch = text.includes(input);
-                let matchesCategory = (currentCategory === 'all' || category === currentCategory);
-
-                if (matchesSearch && matchesCategory) {
-                    card.style.display = "";
-                } else {
-                    card.style.display = "none";
-                }
-            }
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-        }
-    </script>
 </body>
 </html>
