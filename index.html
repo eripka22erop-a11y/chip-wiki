@@ -65,45 +65,51 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
-        .theme-btn, .burger-btn {
+        .control-btn {
             background: var(--card-hover);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 12px;
+            padding: 8px 14px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .theme-btn:hover, .burger-btn:hover {
+        .control-btn:hover {
             border-color: var(--accent-blue);
-        }
-
-        .burger-btn {
-            display: none;
+            color: var(--accent-blue);
         }
 
         .layout {
             max-width: 1400px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 20px;
+            position: relative;
         }
 
+        /* Выпадающая панель категорий */
         .sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 280px;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 20px;
-            height: fit-content;
-            position: sticky;
-            top: 20px;
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            display: none;
+            z-index: 100;
+        }
+
+        .sidebar.active {
+            display: block;
         }
 
         .sidebar h3 {
@@ -184,22 +190,6 @@
             border-radius: 4px;
             border: 1px solid rgba(56, 189, 248, 0.2);
         }
-
-        @media (max-width: 768px) {
-            .layout {
-                grid-template-columns: 1fr;
-            }
-            .sidebar {
-                display: none;
-                position: static;
-            }
-            .sidebar.active {
-                display: block;
-            }
-            .burger-btn {
-                display: block;
-            }
-        }
     </style>
 </head>
 <body data-theme="dark">
@@ -210,12 +200,13 @@
             <p>База знаний по радиокомпонентам (50 элементов)</p>
         </div>
         <div class="header-right">
-            <button class="theme-btn" id="themeToggle" title="Сменить тему">🌓</button>
-            <button class="burger-btn" id="burgerToggle" title="Меню">☰</button>
+            <button class="control-btn" id="burgerToggle" title="Категории">☰ Категории</button>
+            <button class="control-btn" id="themeToggle" title="Сменить тему">🌓</button>
         </div>
     </header>
 
     <div class="layout">
+        <!-- Выпадающее меню категорий -->
         <nav class="sidebar" id="sidebar">
             <h3>Категории</h3>
             <ul>
@@ -651,12 +642,19 @@
             body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
         });
 
-        // Бургер меню для мобилок
+        // Бургер меню (открытие/закрытие по клику, закрытие при клике вне меню)
         const burgerToggle = document.getElementById('burgerToggle');
         const sidebar = document.getElementById('sidebar');
 
-        burgerToggle.addEventListener('click', () => {
+        burgerToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             sidebar.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && e.target !== burgerToggle) {
+                sidebar.classList.remove('active');
+            }
         });
     </script>
 </body>
