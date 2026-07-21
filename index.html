@@ -50,6 +50,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .header-left h1 {
@@ -65,7 +67,8 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .control-btn {
@@ -75,11 +78,11 @@
             padding: 8px 14px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 6px;
         }
 
         .control-btn:hover {
@@ -92,7 +95,7 @@
             margin: 0 auto;
         }
 
-        /* Модальное окно категорий (ничего не сдвигает и не перекрывает сетку до открытия) */
+        /* Модальные окна */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -111,17 +114,17 @@
             display: flex;
         }
 
-        .sidebar {
+        .modal-content {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 30px;
+            padding: 25px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
-        .sidebar h3 {
+        .modal-content h3 {
             color: var(--text-muted);
             font-size: 12px;
             text-transform: uppercase;
@@ -131,18 +134,18 @@
             padding-bottom: 8px;
         }
 
-        .sidebar ul {
+        .modal-content ul {
             list-style: none;
         }
 
-        .sidebar li {
+        .modal-content li {
             margin-bottom: 8px;
         }
 
-        .sidebar a {
+        .modal-content a, .modal-content .stub-item {
             color: var(--text-main);
             text-decoration: none;
-            font-size: 15px;
+            font-size: 14px;
             display: block;
             padding: 10px 14px;
             border-radius: 6px;
@@ -151,7 +154,7 @@
             border: 1px solid var(--border-color);
         }
 
-        .sidebar a:hover {
+        .modal-content a:hover {
             background-color: var(--card-hover);
             color: var(--accent-blue);
             border-color: var(--accent-blue);
@@ -214,26 +217,54 @@
             <p>База знаний по радиокомпонентам (50 элементов)</p>
         </div>
         <div class="header-right">
-            <button class="control-btn" id="burgerToggle" title="Категории">☰ Категории</button>
+            <button class="control-btn" id="burgerToggle">☰ Категории</button>
+            <button class="control-btn" id="calcToggle">🧮 Калькуляторы</button>
+            <button class="control-btn" id="cheatsToggle">📜 Шпаргалки</button>
             <button class="control-btn" id="themeToggle" title="Сменить тему">🌓</button>
         </div>
     </header>
 
-    <!-- Модальное окно категорий -->
-    <div class="modal-overlay" id="modalOverlay">
-        <nav class="sidebar" id="sidebar">
+    <!-- Модалка: Категории -->
+    <div class="modal-overlay" id="modalCategories">
+        <div class="modal-content">
             <h3>Выбрать категорию</h3>
             <ul>
-                <li><a href="#transistors" class="cat-link">Транзисторы и Симисторы</a></li>
-                <li><a href="#power" class="cat-link">Питание и DC-DC</a></li>
-                <li><a href="#sensors" class="cat-link">Датчики</a></li>
-                <li><a href="#drivers" class="cat-link">Драйверы и Моторы</a></li>
-                <li><a href="#mcu" class="cat-link">Микроконтроллеры</a></li>
-                <li><a href="#logic" class="cat-link">Логика и ИС</a></li>
-                <li><a href="#interface" class="cat-link">Интерфейсы и Связь</a></li>
-                <li><a href="#opto" class="cat-link">Оптопары и Реле</a></li>
+                <li><a href="#transistors" class="close-modal">Транзисторы и Симисторы</a></li>
+                <li><a href="#power" class="close-modal">Питание и DC-DC</a></li>
+                <li><a href="#sensors" class="close-modal">Датчики</a></li>
+                <li><a href="#drivers" class="close-modal">Драйверы и Моторы</a></li>
+                <li><a href="#mcu" class="close-modal">Микроконтроллеры</a></li>
+                <li><a href="#logic" class="close-modal">Логика и ИС</a></li>
+                <li><a href="#interface" class="close-modal">Интерфейсы и Связь</a></li>
+                <li><a href="#opto" class="close-modal">Оптопары и Реле</a></li>
             </ul>
-        </nav>
+        </div>
+    </div>
+
+    <!-- Модалка: Калькуляторы -->
+    <div class="modal-overlay" id="modalCalc">
+        <div class="modal-content">
+            <h3>Калькуляторы</h3>
+            <ul>
+                <li><a href="calc-led.html">Расчет резистора для светодиода</a></li>
+                <li><a href="calc-ohm.html">Закон Ома (U, I, R, P)</a></li>
+                <li><a href="calc-555.html">Расчет таймера NE555</a></li>
+                <li><a href="calc-voltage-divider.html">Делитель напряжения</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Модалка: Шпаргалки -->
+    <div class="modal-overlay" id="modalCheats">
+        <div class="modal-content">
+            <h3>Шпаргалки</h3>
+            <ul>
+                <li><a href="cheat-smd.html">Кодировка SMD резисторов / конденсаторов</a></li>
+                <li><a href="cheat-pinouts.html">Популярные распиновки (Arduino, ESP)</a></li>
+                <li><a href="cheat-colors.html">Цветовая маркировка резисторов</a></li>
+                <li><a href="cheat-transistors.html">Цоколевка транзисторов (TO-92, TO-220)</a></li>
+            </ul>
+        </div>
     </div>
 
     <div class="layout">
@@ -658,25 +689,41 @@
             body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
         });
 
-        // Модальное окно категорий
+        // Универсальное управление модалками
         const burgerToggle = document.getElementById('burgerToggle');
-        const modalOverlay = document.getElementById('modalOverlay');
-        const catLinks = document.querySelectorAll('.cat-link');
+        const calcToggle = document.getElementById('calcToggle');
+        const cheatsToggle = document.getElementById('cheatsToggle');
 
-        burgerToggle.addEventListener('click', () => {
-            modalOverlay.classList.add('active');
-        });
+        const modalCategories = document.getElementById('modalCategories');
+        const modalCalc = document.getElementById('modalCalc');
+        const modalCheats = document.getElementById('modalCheats');
 
-        // Закрываем модалку при клике на фон или на любую категорию из списка
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                modalOverlay.classList.remove('active');
+        function openModal(modal) {
+            closeAllModals();
+            modal.classList.add('active');
+        }
+
+        function closeAllModals() {
+            modalCategories.classList.remove('active');
+            modalCalc.classList.remove('active');
+            modalCheats.classList.remove('active');
+        }
+
+        burgerToggle.addEventListener('click', (e) => { e.stopPropagation(); openModal(modalCategories); });
+        calcToggle.addEventListener('click', (e) => { e.stopPropagation(); openModal(modalCalc); });
+        cheatsToggle.addEventListener('click', (e) => { e.stopPropagation(); openModal(modalCheats); });
+
+        // Закрытие по клику вне модалки
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeAllModals();
             }
         });
 
-        catLinks.forEach(link => {
+        // Закрытие при клике на ссылки внутри модалок
+        document.querySelectorAll('.modal-content a').forEach(link => {
             link.addEventListener('click', () => {
-                modalOverlay.classList.remove('active');
+                closeAllModals();
             });
         });
     </script>
