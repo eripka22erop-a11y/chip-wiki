@@ -90,34 +90,45 @@
         .layout {
             max-width: 1400px;
             margin: 0 auto;
-            position: relative;
         }
 
-        /* Выпадающая панель категорий */
-        .sidebar {
-            position: absolute;
+        /* Модальное окно категорий (ничего не сдвигает и не перекрывает сетку до открытия) */
+        .modal-overlay {
+            position: fixed;
             top: 0;
             left: 0;
-            width: 280px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
             display: none;
-            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
 
-        .sidebar.active {
-            display: block;
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .sidebar {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
         .sidebar h3 {
             color: var(--text-muted);
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
         }
 
         .sidebar ul {
@@ -125,22 +136,25 @@
         }
 
         .sidebar li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .sidebar a {
             color: var(--text-main);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 15px;
             display: block;
-            padding: 6px 10px;
+            padding: 10px 14px;
             border-radius: 6px;
             transition: all 0.2s ease;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
         }
 
         .sidebar a:hover {
             background-color: var(--card-hover);
             color: var(--accent-blue);
+            border-color: var(--accent-blue);
         }
 
         .grid {
@@ -205,22 +219,24 @@
         </div>
     </header>
 
-    <div class="layout">
-        <!-- Выпадающее меню категорий -->
+    <!-- Модальное окно категорий -->
+    <div class="modal-overlay" id="modalOverlay">
         <nav class="sidebar" id="sidebar">
-            <h3>Категории</h3>
+            <h3>Выбрать категорию</h3>
             <ul>
-                <li><a href="#transistors">Транзисторы и Симисторы</a></li>
-                <li><a href="#power">Питание и DC-DC</a></li>
-                <li><a href="#sensors">Датчики</a></li>
-                <li><a href="#drivers">Драйверы и Моторы</a></li>
-                <li><a href="#mcu">Микроконтроллеры</a></li>
-                <li><a href="#logic">Логика и ИС</a></li>
-                <li><a href="#interface">Интерфейсы и Связь</a></li>
-                <li><a href="#opto">Оптопары и Реле</a></li>
+                <li><a href="#transistors" class="cat-link">Транзисторы и Симисторы</a></li>
+                <li><a href="#power" class="cat-link">Питание и DC-DC</a></li>
+                <li><a href="#sensors" class="cat-link">Датчики</a></li>
+                <li><a href="#drivers" class="cat-link">Драйверы и Моторы</a></li>
+                <li><a href="#mcu" class="cat-link">Микроконтроллеры</a></li>
+                <li><a href="#logic" class="cat-link">Логика и ИС</a></li>
+                <li><a href="#interface" class="cat-link">Интерфейсы и Связь</a></li>
+                <li><a href="#opto" class="cat-link">Оптопары и Реле</a></li>
             </ul>
         </nav>
+    </div>
 
+    <div class="layout">
         <main class="grid">
             <!-- Транзисторы и Симисторы -->
             <a href="irf3205.html" class="component-card" id="transistors">
@@ -642,19 +658,26 @@
             body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
         });
 
-        // Бургер меню (открытие/закрытие по клику, закрытие при клике вне меню)
+        // Модальное окно категорий
         const burgerToggle = document.getElementById('burgerToggle');
-        const sidebar = document.getElementById('sidebar');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const catLinks = document.querySelectorAll('.cat-link');
 
-        burgerToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            sidebar.classList.toggle('active');
+        burgerToggle.addEventListener('click', () => {
+            modalOverlay.classList.add('active');
         });
 
-        document.addEventListener('click', (e) => {
-            if (!sidebar.contains(e.target) && e.target !== burgerToggle) {
-                sidebar.classList.remove('active');
+        // Закрываем модалку при клике на фон или на любую категорию из списка
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
             }
+        });
+
+        catLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                modalOverlay.classList.remove('active');
+            });
         });
     </script>
 </body>
